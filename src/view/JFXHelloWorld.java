@@ -47,10 +47,10 @@ public class JFXHelloWorld extends Application {
 
         gc.strokeOval(100, 100, 100, 100);
 
-        Image buff = new Image("images/card-ambassador.jpg");
+        //Image buff = new Image("images/card-ambassador.jpg");
 
 
-        gc.drawImage(buff, 0, 0);
+        //gc.drawImage(buff, 0, 0);
 
         root.getChildren().add(canvas);
 
