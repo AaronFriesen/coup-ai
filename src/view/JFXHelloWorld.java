@@ -1,3 +1,5 @@
+package view;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,7 +17,7 @@ import java.awt.image.BufferedImage;
 import javafx.scene.image.Image;
 
 
-public class HelloWorld extends Application {
+public class JFXHelloWorld extends Application {
     public static void main(String ... args) {
         launch(args);
     }
@@ -43,7 +45,7 @@ public class HelloWorld extends Application {
         gc.setLineWidth(5);
         gc.setStroke(Color.ORANGE);
 
-        //gc.strokeOval(100, 100, 100, 100);
+        gc.strokeOval(100, 100, 100, 100);
 
         Image buff = new Image("images/card-ambassador.jpg");
 
