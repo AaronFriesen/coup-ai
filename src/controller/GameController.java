@@ -1,0 +1,110 @@
+package controller;
+
+import model.game;
+import java.util.List;
+import java.util.ArrayList;
+
+/**
+ * This class implements taking game turns and contains the logic for blocking,
+ * calling bluffs, and blocking bluffs. Implemented as a stack of Actions,
+ * which are Move, Player(target) pairs.
+ *
+ * @author Aaron Friesen
+ * @version 0.75
+ */
+public class GameController {
+
+    private Game game;
+
+    private List<Action> stack;
+
+    private static GameController instance;
+
+    private GameController() {
+        // this.game = new Game(); // This is where we put concrete game.
+        this.game.setPlayers(null); // This is where we make Player list.
+        this.stack = new ArrayList<Move>();
+    }
+
+    public static GameController getInstance() {
+        return instance == null ? instance = new GameController() : instance;
+    }
+
+    public void pushAction(Action m) {
+        stack.push(m);
+    }
+
+    public void executeActions() {
+        //go from the top down
+        while (!stack.isEmpty()) {
+            Action a = stack.pop();
+            Move m = a.move;
+            //if m is an interesting move
+            if (m != Move.PASS) {
+                Move temp = Move.PASS;
+                //if m is blocking stealing, then eat through the stack until we remove the stealing move
+                if (m == Move.BLOCK_STEAL) {
+                    while (temp != Move.STEAL) {
+                        temp = stack.pop();
+                    }
+                } else if (m == Move.BLOCK_EXCHANGE) { //same for exchange
+                    while (temp != Move.EXCHANGE) {
+                        temp = stack.pop();
+                    }
+                } else if (m == Move.BLOCK_ASSASSINATE) { //same for assassinate
+                    while (temp != Move.ASSASSINATE) {
+                        temp = stack.pop();
+                    }
+                } else if (m == Move.BLOCK_BLUFF_AMBASSADOR) {
+                    while (temp != Move.CALL_BLUFF_AMBASSADOR) {
+                        temp = stack.pop();
+                    }
+                    game.resolveFailedCall(a.player, a.move);
+                } else if (m == Move.BLOCK_BLUFF_ASSASSIN) {
+                    while (temp != Move.CALL_BLUFF_ASSASSIN) {
+                        temp = stack.pop();
+                    }
+                    game.resolveFailedCall(a.player, a.move);
+                } else if (m == Move.BLOCK_BLUFF_CAPTAIN) {
+                    while (temp != Move.CALL_BLUFF_CAPTAIN) {
+                        temp = stack.pop();
+                    }
+                    game.resolveFailedCall(a.player, a.move);
+                } else if (m == Move.BLOCK_BLUFF_CONTESSA) {
+                    while (temp != Move.CALL_BLUFF_CONTESSA) {
+                        temp = stack.pop();
+                    }
+                    game.resolveFailedCall(a.player, a.move);
+                } else if (m == Move.BLOCK_BLUFF_DUKE) {
+                    while (temp != Move.CALL_BLUFF_DUKE) {
+                        temp = stack.pop();
+                    }
+                    game.resolveFailedCall(a.player, a.move);
+                } else if (m == Move.CALL_BLUFF_ASSASSIN || m == Move.CALL_BLUFF_AMBASSADOR
+                        || m == Move.CALL_BLUFF_CAPTAIN || m == Move.CALL_BLUFF_CONTESSA
+                        || m == Move.CALL_BLUFF_DUKE) {
+                    while (temp == Move.PASS) {
+                        temp = stack.pop();
+                    }
+                    game.resolveSuccessfulCall(m);
+                } else {
+                    game.makeMove(m, a.player);
+                }
+            }
+        }
+    }
+
+
+
+
+    public Card playerChooseDeadCard(Player p) {
+        //do stuff involving picking that player's dead card. Probably needs UI.
+        //for now, just kill their first card
+        List<Card> psCards = p.getLivingCards();
+        Card deadCard = psCards.get(0);
+        p.killCard(deadCard);
+        return deadCard;
+    }
+
+
+}

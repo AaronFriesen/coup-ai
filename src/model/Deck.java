@@ -34,4 +34,17 @@ public class Deck {
         discardAndShuffle(second);
     }
 
+    public int cardsInDeck() {
+        return cards.size();
+    }
+
+    public Deck clone() {
+        Deck d = new Deck();
+        d.cards = new ArrayList<Card>();
+        for (Card c : cards) {
+            d.cards.add(c);
+        }
+        return d;
+    }
+
 }

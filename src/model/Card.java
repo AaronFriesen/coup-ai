@@ -12,8 +12,8 @@ public enum Card {
     private String backFile;
 
     private Card(String fileName) {
-        this.frontFile = "../../images/card-" + fileName + ".jpg";
-        this.backFile = "../../images/card-back.jpg";
+        this.frontFile = "images/card-" + fileName + ".jpg";
+        this.backFile = "images/card-back.jpg";
     }
 
     public String getFront() {
