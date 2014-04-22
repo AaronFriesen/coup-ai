@@ -76,7 +76,7 @@ public class CoupGameState implements GameState {
                 newCards.add(newState.deck.draw());
                 newState.players.get(activePlayer).setLivingCards(newCards); break;
             case STEAL:
-                newState.players.get(activePlayer).addIsk(newState.players.get(newTarget.stealFrom()); break;
+                newState.players.get(activePlayer).addIsk(newState.players.get(newTarget.stealFrom())); break;
             default: break;
         }
 
