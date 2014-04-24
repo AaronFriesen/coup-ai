@@ -1,8 +1,9 @@
 package controller;
 
-import model.game;
+import model.*;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * This class implements taking game turns and contains the logic for blocking,
@@ -16,14 +17,14 @@ public class GameController {
 
     private Game game;
 
-    private List<Action> stack;
+    private LinkedList<Action> stack;
 
     private static GameController instance;
 
     private GameController() {
         // this.game = new Game(); // This is where we put concrete game.
         this.game.setPlayers(null); // This is where we make Player list.
-        this.stack = new ArrayList<Move>();
+        this.stack = new LinkedList<Action>();
     }
 
     public static GameController getInstance() {
@@ -53,46 +54,42 @@ public class GameController {
                 //if m is blocking stealing, then eat through the stack until we remove the stealing move
                 if (m == Move.BLOCK_STEAL_AMBASSADOR || m == Move.BLOCK_STEAL_CAPTAIN) {
                     while (temp != Move.STEAL) {
-                        temp = stack.pop();
-                    }
-                } else if (m == Move.BLOCK_EXCHANGE) { //same for exchange
-                    while (temp != Move.EXCHANGE) {
-                        temp = stack.pop();
+                        temp = stack.pop().move;
                     }
                 } else if (m == Move.BLOCK_ASSASSINATE) { //same for assassinate
                     while (temp != Move.ASSASSINATE) {
-                        temp = stack.pop();
+                        temp = stack.pop().move;
                     }
                 } else if (m == Move.BLOCK_BLUFF_AMBASSADOR) {
                     while (temp != Move.CALL_BLUFF_AMBASSADOR) {
-                        temp = stack.pop();
+                        temp = stack.pop().move;
                     }
                     game.resolveFailedCall(a.player, a.move);
                 } else if (m == Move.BLOCK_BLUFF_ASSASSIN) {
                     while (temp != Move.CALL_BLUFF_ASSASSIN) {
-                        temp = stack.pop();
+                        temp = stack.pop().move;
                     }
                     game.resolveFailedCall(a.player, a.move);
                 } else if (m == Move.BLOCK_BLUFF_CAPTAIN) {
                     while (temp != Move.CALL_BLUFF_CAPTAIN) {
-                        temp = stack.pop();
+                        temp = stack.pop().move;
                     }
                     game.resolveFailedCall(a.player, a.move);
                 } else if (m == Move.BLOCK_BLUFF_CONTESSA) {
                     while (temp != Move.CALL_BLUFF_CONTESSA) {
-                        temp = stack.pop();
+                        temp = stack.pop().move;
                     }
                     game.resolveFailedCall(a.player, a.move);
                 } else if (m == Move.BLOCK_BLUFF_DUKE) {
                     while (temp != Move.CALL_BLUFF_DUKE) {
-                        temp = stack.pop();
+                        temp = stack.pop().move;
                     }
                     game.resolveFailedCall(a.player, a.move);
                 } else if (m == Move.CALL_BLUFF_ASSASSIN || m == Move.CALL_BLUFF_AMBASSADOR
                         || m == Move.CALL_BLUFF_CAPTAIN || m == Move.CALL_BLUFF_CONTESSA
                         || m == Move.CALL_BLUFF_DUKE) {
                     while (temp == Move.PASS) {
-                        temp = stack.pop();
+                        temp = stack.pop().move;
                     }
                     game.resolveSuccessfulCall(m);
                 } else {
