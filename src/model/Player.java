@@ -9,6 +9,7 @@ public interface Player {
 
     List<Card> getDeadCards();
     List<Card> setLivingCards(List<Card> list);
+    List<Card> getLivingCards();
 
     boolean isAI();
     boolean hasCard(Card c);

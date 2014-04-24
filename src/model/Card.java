@@ -1,4 +1,5 @@
 package model;
+import java.util.Random;
 
 public enum Card {
     AMBASSADOR("ambassador"),
@@ -22,5 +23,9 @@ public enum Card {
 
     public String getBack() {
         return this.backFile;
+    }
+
+    public static Card random() {
+        return Card.values()[(new Random().nextInt(5))];
     }
 }

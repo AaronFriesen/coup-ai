@@ -16,11 +16,14 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import javafx.scene.image.Image;
 import model.Move;
+import model.Action;
+import model.Card;
+import controller.GameController;
 
 
 public class GameStateView extends Application {
 
-    private GameController control = GameController.getInstance();
+    private GameController control = null;//GameController.getInstance();
 
     public static void main(String ... args) {
         launch(args);
@@ -40,8 +43,8 @@ public class GameStateView extends Application {
         });
 
         Button end = new Button();
-        btn.setText("End Turn");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
+        end.setText("End Turn");
+        end.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 control.executeActions();
@@ -58,18 +61,25 @@ public class GameStateView extends Application {
         gc.setLineWidth(5);
         gc.setStroke(Color.ORANGE);
 
-        //gc.strokeOval(100, 100, 100, 100);
-        try (Image buff = new Image("images/card-ambassador.jpg", 150, 300, true, true)){
 
+        Card a, b;
+        a = Card.random();
+        b = Card.random();
+        Image[] buff = new Image[2];
+        //gc.strokeOval(100, 100, 100, 100);
+        try {
+            buff[0] = new Image(a.getFront(), 150, 300, true, true);
+            buff[1] = new Image(b.getFront(), 150, 300, true, true);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if (buff != null) gc.drawImage(buff, 0, 0);
-
+        gc.drawImage(buff[0], 0, 0);
+        gc.drawImage(buff[1], 150, 0);
         root.getChildren().add(canvas);
 
         root.getChildren().add(btn);
+        root.getChildren().add(end);
         primaryStage.setScene(new Scene(root, 800, 800));
         primaryStage.show();
     }
