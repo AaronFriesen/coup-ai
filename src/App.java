@@ -7,6 +7,6 @@ public class App {
         //here is where we start + run the program. Makefile targets this.
         HelloWorld.main(args);
         JFXHelloWorld.main(args);
-        CoupGameState();
+        //CoupGameState();
     }
 }

@@ -3,12 +3,15 @@ import java.util.List;
 
 public interface Player {
 
-	private int numIsk;
+	//int numIsk;
+	//List<Card> livingCards;
+	//List<Card> deadCards;
 	
     int getIsk();
     int stealFrom();
 
     List<Card> getDeadCards();
+    List<Card> getLivingCards();
     List<Card> setLivingCards(List<Card> list);
 
     boolean isAI();

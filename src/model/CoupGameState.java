@@ -2,6 +2,7 @@ package model;
 
 import java.util.List;
 import java.util.ArrayList;
+import controller.*;
 
 public class CoupGameState implements GameState {
 
@@ -40,11 +41,11 @@ public class CoupGameState implements GameState {
 
     public GameState generateSuccessorState(Player source, Move m,
                                                 Player target) {
-        GameState newState = new CoupGameState(this);
+        CoupGameState newState = new CoupGameState(this);
         int newSource = 0;
         int newTarget = 0;
 
-        for (int i = 0; i < players.length(); i++) {
+        for (int i = 0; i < players.size(); i++) {
             if (newState.players.get(i).equals(source)) {
                 newSource = i;
             }
@@ -76,7 +77,7 @@ public class CoupGameState implements GameState {
                 newCards.add(newState.deck.draw());
                 newState.players.get(activePlayer).setLivingCards(newCards); break;
             case STEAL:
-                newState.players.get(activePlayer).addIsk(newState.players.get(newTarget.stealFrom())); break;
+                newState.players.get(activePlayer).addIsk(newState.players.get(newTarget).stealFrom()); break;
             default: break;
         }
 
@@ -86,11 +87,11 @@ public class CoupGameState implements GameState {
     }
 
     public GameState resolveFailedCall(Player caller, Move bluffType, Player target) {
-        GameState newState = new CoupGameState(this);
+        CoupGameState newState = new CoupGameState(this);
         int newCaller = 0;
         int newTarget = 0;
 
-        for (int i = 0; i < players.length(); i++) {
+        for (int i = 0; i < newState.players.size(); i++) {
             if (newState.players.get(i).equals(caller)) {
                 newCaller = i;
             }
@@ -126,7 +127,7 @@ public class CoupGameState implements GameState {
     }
 
     public GameState resolveSuccessfulCall(Move bluffType) {
-        GameState newState = new CoupGameState(this);
+        CoupGameState newState = new CoupGameState(this);
         GameController gc = GameController.getInstance();
         gc.playerChooseDeadCard(newState.players.get(activePlayer));
 

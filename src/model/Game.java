@@ -8,7 +8,7 @@ public interface Game {
     void makeMove(Player source, Move m, Player target);
     void setPlayers(List<Player> players);
 
-    void resolveFailedBluff(Player caller, Move bluffType);
+    void resolveFailedCall(Player caller, Move bluffType);
     void resolveSuccessfulCall(Move bluffType);
     GameState getState();
 
