@@ -15,23 +15,36 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import javafx.scene.image.Image;
+import model.Move;
 
 
-public class JFXHelloWorld extends Application {
+public class GameStateView extends Application {
+
+    private GameController control = GameController.getInstance();
+
     public static void main(String ... args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("Play Coup");
         Button btn = new Button();
-        btn.setText("Say 'Hello World'");
+        btn.setText("Take Income");
         btn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
+                control.pushAction(new Action(control.getCurrentPlayer(), Move.INCOME));
+            }
+        });
+
+        Button end = new Button();
+        btn.setText("End Turn");
+        btn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                control.executeActions();
             }
         });
 
@@ -45,13 +58,10 @@ public class JFXHelloWorld extends Application {
         gc.setLineWidth(5);
         gc.setStroke(Color.ORANGE);
 
-        gc.strokeOval(100, 100, 100, 100);
-        Image buff = null;
-        System.out.println(System.getProperty("user.dir") + "/images/card-ambassador.jpg");
-        try {
-            buff = new Image("../images/card-ambassador.jpg");
+        //gc.strokeOval(100, 100, 100, 100);
+        try (Image buff = new Image("images/card-ambassador.jpg", 150, 300, true, true)){
+
         } catch (Exception e) {
-            System.out.println(System.getProperty("user.dir"));
             e.printStackTrace();
         }
 

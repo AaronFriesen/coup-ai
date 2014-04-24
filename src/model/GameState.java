@@ -6,6 +6,7 @@ import java.util.List;
 public interface GameState {
 
     List<Player> getPlayers();
+    Player getCurrentPlayer();
 
     GameState generateSuccessorState(Player source, Move m, Player target);
     GameState resolveFailedCall(Player caller, Move bluffType, Player target);

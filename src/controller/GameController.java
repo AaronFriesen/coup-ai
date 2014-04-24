@@ -30,6 +30,14 @@ public class GameController {
         return instance == null ? instance = new GameController() : instance;
     }
 
+    public Game getGame() {
+        return this.game;
+    }
+
+    public Player getCurrentPlayer() {
+        return this.game.getCurrentPlayer();
+    }
+
     public void pushAction(Action m) {
         stack.push(m);
     }
@@ -43,7 +51,7 @@ public class GameController {
             if (m != Move.PASS) {
                 Move temp = Move.PASS;
                 //if m is blocking stealing, then eat through the stack until we remove the stealing move
-                if (m == Move.BLOCK_STEAL) {
+                if (m == Move.BLOCK_STEAL_AMBASSADOR || m == Move.BLOCK_STEAL_CAPTAIN) {
                     while (temp != Move.STEAL) {
                         temp = stack.pop();
                     }

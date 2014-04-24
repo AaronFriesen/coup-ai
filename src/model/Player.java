@@ -3,8 +3,7 @@ import java.util.List;
 
 public interface Player {
 
-	private int numIsk;
-	
+
     int getIsk();
     int stealFrom();
 

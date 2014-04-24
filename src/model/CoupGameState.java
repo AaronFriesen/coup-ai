@@ -38,6 +38,10 @@ public class CoupGameState implements GameState {
         return this.players;
     }
 
+    public Player getCurrentPlayer() {
+        return players.get(activePlayer);
+    }
+
     public GameState generateSuccessorState(Player source, Move m,
                                                 Player target) {
         GameState newState = new CoupGameState(this);

@@ -9,6 +9,7 @@ EXECUTABLE=App
 
 all: $(SOURCES) ;
 	mkdir -p $(TARG)
+	cp -r images target
 	$(CC) $(CFLAGS) $(SOURCES)
 
 
