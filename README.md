@@ -18,6 +18,8 @@ This is the game itself. It needs to encompass allowing the user to choose actio
 * GUI
 * Network capability
 
+Currently, it is implemented using a Stack of Actions (which are <Player, Move> pairs). The Controller exposes methods that allow the View to put Actions onto the stack from each player, and additionally has a method which executes those actions.
+
 The Player Card Reasoner
 ------------------------
 This is the module that tries to deduce what the other players have based on cards the agent has seen and actions he has seen enemies take.
@@ -27,9 +29,11 @@ Things that the Player card Reasoner needs to make available:
 * % Probability that Player A has card C
 * Gamestate corresponding to current most likely state of all players
 * Most unknown card (card that this agent has the least knowledge about).
+* This will be implemented using the [jahmm](https://code.google.com/p/jahmm/ "Welcome to the") (pronounced jam) Java Hidden Markov Model library.
 
 The Action Chooser
 ------------------
-This is the module that, given a gamestate, tries to decide what course of action should be taken. Less of a clear idea of what should be done on this one. Maybe implement general strategies?
+This is the module that, given a gamestate, tries to decide what course of action should be taken. Implemented using a [Behavior Tree](http://www.altdevblogaday.com/2011/02/24/introduction-to-behavior-trees/). I'd read the whole thing if you want to get a good idea how decision trees work.
 
-I will work on drafting up Interfaces for these three to talk to each other. That way, we can work on them independently without messing with work that the other is doing.
+* Possible actions include bluffing, telling the truth, calling bluffs below a specific certainty threshold, and taking "safe" routes to victory.
+* This will be implemented using the [jbt](https://github.com/gaia-ucm/jbt) Java Behavior Tree library.
