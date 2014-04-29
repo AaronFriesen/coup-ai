@@ -11,6 +11,8 @@ public class CoupGameState implements GameState {
     private List<Player> players;
     private int activePlayer;
     private Deck deck;
+
+    private Player humanPlayer;
     public CoupGameState(CoupGameState c) { //copy constructor
         players = new ArrayList<Player>();
         for (Player p : c.players) {
@@ -19,7 +21,7 @@ public class CoupGameState implements GameState {
         }
         this.deck = c.deck.clone();
         this.activePlayer = c.activePlayer;
-
+        this.humanPlayer = c.humanPlayer;
     }
 
     public CoupGameState() {
@@ -27,7 +29,8 @@ public class CoupGameState implements GameState {
         for (int i = 1; i < NUM_PLAYERS; i++) {
             players.add(new CompPlayer());
         }
-        players.add(new CoupPlayer());
+        humanPlayer = new CoupPlayer();
+        players.add(humanPlayer);
         this.deck = new Deck();
 
         for (Player p : players) {
@@ -47,6 +50,10 @@ public class CoupGameState implements GameState {
     public Player getCurrentPlayer() {
 
         return players.get(activePlayer);
+    }
+
+    public Player getHumanPlayer() {
+        return humanPlayer;
     }
 
     public GameState generateSuccessorState(Player source, Move m,

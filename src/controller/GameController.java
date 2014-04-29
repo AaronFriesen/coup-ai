@@ -229,4 +229,8 @@ public class GameController {
         this.game.aiTurns();
     }
 
+    public Player getHumanPlayer() {
+        return this.game.getHumanPlayer();
+    }
+
 }

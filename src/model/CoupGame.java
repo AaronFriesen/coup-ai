@@ -69,6 +69,10 @@ public class CoupGame implements Game {
         return this.gameState.getCurrentPlayer();
     }
 
+    public Player getHumanPlayer() {
+        return this.gameState.getHumanPlayer();
+    }
+
     public void aiTurns() {
         List<Player> players = this.gameState.getPlayers();
         GameController control = GameController.getInstance();
