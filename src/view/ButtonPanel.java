@@ -10,35 +10,35 @@ import javax.swing.*;
 import java.awt.geom.AffineTransform;
 
 import model.*;
-import controller.*;
 import java.util.List;
 
-public class CoupPanel extends JPanel{
+public class ButtonPanel extends JPanel{
 	
 	private GameState gs;
-	final int cardWidth = 100;
-	final int cardHeight = 150;
-	
-	public CoupPanel(){
-		this.setPreferredSize(new Dimension(600,600));
-		this.setLayout(new BorderLayout());
-	}
-	
-	
-
 
 	
-	public void setState(GameState gs){
-		this.gs = gs;
-		ButtonPanel bp = new ButtonPanel();
-		CardPanel cp = new CardPanel();
-		cp.setState(gs);
-		this.add(bp, BorderLayout.WEST);
-		this.add(cp, BorderLayout.CENTER);
-		GameController instance = GameController.getInstance();
-		bp.populate(instance.getValidMoves(gs));
+	public ButtonPanel(){
+		this.setPreferredSize(new Dimension(200,600));
+		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
 	}
+	
+	
+	
+	public void populate(List<Move> moves){
+		
+		
+		this.add(Box.createVerticalGlue());
+		for(int i = 0; i < moves.size(); i++){
+			JButton a = new JButton("This is button "+i);
+			this.add(a);
+			
+			
+		}
+		
+		this.add(Box.createVerticalGlue());
+	}
+	
 	
 	
 	
