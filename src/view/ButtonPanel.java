@@ -76,6 +76,17 @@ public class ButtonPanel extends JPanel{
 
 
 		this.add(Box.createVerticalGlue());
+		
+		//remove old buttons;
+		for(int i = 0; i < this.getComponents().length; i++){
+			
+			//this.remove(this.getComponent(i));
+			
+		}
+		
+		//
+		
+		
 		for(int i = 0; i < moves.size(); i++){
 
 
@@ -86,7 +97,7 @@ public class ButtonPanel extends JPanel{
 				public void actionPerformed(ActionEvent e) {
 					GameController control = GameController.getInstance();
 					System.out.println("player 1 took " + m.toString() + " a derpa derp");
-					if (m != null) control.pushAction(new Action(control.getCurrentPlayer(), m));
+					if (m != null) control.pushAction(new Action(control.getHumanPlayer(), m));
 					control.aiTurns();
 				}
 			});

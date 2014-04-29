@@ -46,7 +46,7 @@ public class CoupPanel extends JPanel{
 		add(bp, BorderLayout.WEST);
 		GameController instance = GameController.getInstance();
 		bp.populate(instance.getValidMoves(gs));
-
+		repaint();
 	}
 
 

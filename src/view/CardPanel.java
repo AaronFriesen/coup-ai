@@ -79,9 +79,9 @@ public class CardPanel extends JPanel{
 		
 		//Player Cards
 
-		List<Card> playerCards = gs.getPlayers().get(0).getLivingCards();
-		List<Card> playerDeadCards = gs.getPlayers().get(0).getDeadCards();
-		int iskNum = gs.getPlayers().get(0).getIsk();
+		List<Card> playerCards = gs.getPlayers()[0].getLivingCards();
+		List<Card> playerDeadCards = gs.getPlayers()[0].getDeadCards();
+		int iskNum = gs.getPlayers()[0].getIsk();
 
 		for(int i = 0; i < playerCards.size(); i++){
 			BufferedImage img = null;
@@ -131,8 +131,8 @@ public class CardPanel extends JPanel{
 		
 		//Left Cards
 		
-		List<Card> leftDeadCards = gs.getPlayers().get(1).getDeadCards();
-		List<Card> leftCards = gs.getPlayers().get(1).getLivingCards();
+		List<Card> leftDeadCards = gs.getPlayers()[1].getDeadCards();
+		List<Card> leftCards = gs.getPlayers()[1].getLivingCards();
 		
 		
 		for(int i = 0; i < leftDeadCards.size(); i++){
@@ -185,7 +185,7 @@ public class CardPanel extends JPanel{
 		
 		try{
 			BufferedImage isk;
-			iskNum = gs.getPlayers().get(1).getIsk(); 
+			iskNum = gs.getPlayers()[1].getIsk(); 
 			
 			isk = ImageIO.read(new File(("images/isk.png")));
 			 
@@ -211,8 +211,8 @@ public class CardPanel extends JPanel{
 		
 		//Top Cards
 		
-		List<Card> topCards = gs.getPlayers().get(2).getLivingCards();
-		List<Card> topDeadCards = gs.getPlayers().get(2).getDeadCards();
+		List<Card> topCards = gs.getPlayers()[2].getLivingCards();
+		List<Card> topDeadCards = gs.getPlayers()[2].getDeadCards();
 
 		for(int i = 0; i < topDeadCards.size(); i++){
 			BufferedImage img = null;
@@ -240,7 +240,7 @@ public class CardPanel extends JPanel{
 		
 		try{
 			BufferedImage isk;
-			iskNum = gs.getPlayers().get(2).getIsk(); 
+			iskNum = gs.getPlayers()[2].getIsk(); 
 			
 			isk = ImageIO.read(new File(("images/isk.png")));
 			 
@@ -263,8 +263,8 @@ public class CardPanel extends JPanel{
 		
 		//Right Cards
 		
-		List<Card> rightCards = gs.getPlayers().get(3).getLivingCards();
-		List<Card> rightDeadCards = gs.getPlayers().get(3).getDeadCards();
+		List<Card> rightCards = gs.getPlayers()[3].getLivingCards();
+		List<Card> rightDeadCards = gs.getPlayers()[3].getDeadCards();
 		
 		
 		
@@ -315,7 +315,7 @@ public class CardPanel extends JPanel{
 		
 		try{
 			BufferedImage isk;
-			iskNum = gs.getPlayers().get(3).getIsk(); 
+			iskNum = gs.getPlayers()[3].getIsk(); 
 			
 			isk = ImageIO.read(new File(("images/isk.png")));
 			 
