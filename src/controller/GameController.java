@@ -30,10 +30,10 @@ public class GameController {
 
     private GameController() {
         this.game = new CoupGame(); // This is where we put concrete game.
-        this.game.setPlayers(null); // This is where we make Player list.
+        //this.game.setPlayers(null); // This is where we make Player list.
         this.stack = new LinkedList<Action>();
     }
-
+    
     public static GameController getInstance() {
         return instance == null ? instance = new GameController() : instance;
     }

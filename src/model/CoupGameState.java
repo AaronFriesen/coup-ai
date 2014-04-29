@@ -43,6 +43,7 @@ public class CoupGameState implements GameState {
     }
 
     public Player getCurrentPlayer() {
+    	
         return players.get(activePlayer);
     }
 

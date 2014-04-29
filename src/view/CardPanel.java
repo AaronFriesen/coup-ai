@@ -18,6 +18,9 @@ public class CardPanel extends JPanel{
 	private GameState gs;
 	final int cardWidth = 100;
 	final int cardHeight = 150;
+	final int cardBorder = 20;
+	final int iskDist = 15;
+	final int iskSize = 75;
 	
 	public CardPanel(){
 		this.setPreferredSize(new Dimension(600,600));
@@ -43,24 +46,118 @@ public class CardPanel extends JPanel{
 		Graphics2D g2d = (Graphics2D) g;
 		
 		
+		
+		
+		
+		
+		//Table
+		
+		
+		BufferedImage table = null;
+		
+		try{
+		 table = ImageIO.read(new File(("images/table.png")));
+		 
+		 double tiles = (getWidth()*1.0)/(1.0*table.getWidth());
+		 for(int i = 0; i < tiles; i++){
+			 for(int y = 0; y < tiles+1; y++){
+		 
+				 g.drawImage(table, i*table.getWidth(),y*table.getHeight(),table.getWidth(),table.getHeight(), null);
+		 
+			 }
+		 }
+		} catch (IOException e){
+			System.out.println("FAILED");
+		}
+	
+
+		
+		
+		
+		
+		
+		
 		//Player Cards
 
 		List<Card> playerCards = gs.getPlayers().get(0).getLivingCards();
+		List<Card> playerDeadCards = gs.getPlayers().get(0).getDeadCards();
+		int iskNum = gs.getPlayers().get(0).getIsk();
 
 		for(int i = 0; i < playerCards.size(); i++){
 			BufferedImage img = null;
 			
 			try{
 			 img = ImageIO.read(new File((playerCards.get(i).getFront())));
-			 g.drawImage(img, (i*cardWidth)+(getWidth()/2-(playerCards.size()*cardWidth)/2),getHeight()-cardHeight, 100, 150, null);
+			 g.drawImage(img, (i*cardWidth)+(getWidth()/2-((playerCards.size()+playerDeadCards.size())*cardWidth)/2),getHeight()-cardHeight-cardBorder, 100, 150, null);
+			} catch (IOException e){
+			}
+		}
+		
+		for(int i = 0; i < playerDeadCards.size(); i++){
+			BufferedImage img = null;
+			
+			try{
+			 img = ImageIO.read(new File((playerCards.get(i).getBack())));
+			 g.drawImage(img, ((i+playerCards.size())*cardWidth)+(getWidth()/2-((playerCards.size()+playerDeadCards.size())*cardWidth)/2),getHeight()-cardHeight-cardBorder, 100, 150, null);
 			} catch (IOException e){
 			}
 		}
 		
 		
+		
+		
+		try{
+			BufferedImage isk;
+			 isk = ImageIO.read(new File(("images/isk.png")));
+			 
+			 int x = ((playerDeadCards.size()+playerCards.size())*cardWidth)+(getWidth()/2-((playerCards.size()+playerDeadCards.size())*cardWidth)/2) + iskDist;
+			 int y = getHeight()-cardHeight+cardHeight/4;
+			 
+			 g.drawImage(isk,x,y, iskSize, iskSize, null);
+			 
+			 
+			 g.setFont(new Font("TimesRoman", Font.BOLD, 20)); 
+			 g.setColor(Color.white);
+			 g.drawString(""+iskNum+" ISKs", x,y+iskSize+iskDist);
+			 
+			} catch (IOException e){
+				System.out.println("FAILED");
+			}
+		
+		
+		
+		
+		
+		
 		//Left Cards
 		
+		List<Card> leftDeadCards = gs.getPlayers().get(1).getDeadCards();
 		List<Card> leftCards = gs.getPlayers().get(1).getLivingCards();
+		
+		
+		for(int i = 0; i < leftDeadCards.size(); i++){
+			BufferedImage img = null;
+			
+			try{
+			AffineTransform at = new AffineTransform();
+			
+			//at.rotate(Math.PI/2);
+			at.translate(cardHeight +cardBorder, (i*cardWidth) + ((getHeight()/2)-((leftDeadCards.size()+leftCards.size())*cardWidth)/2));
+			at.rotate(Math.PI/2);
+				
+			 img = ImageIO.read(new File((leftDeadCards.get(i).getFront())));
+			 
+			 at.scale((cardWidth*1.0)/img.getWidth(), (cardHeight*1.0)/img.getHeight());
+			 
+			 g2d.drawImage(img, at, null);
+			
+			
+			
+			} catch (IOException e){
+			}
+		}
+		
+
 		
 		for(int i = 0; i < leftCards.size(); i++){
 			BufferedImage img = null;
@@ -69,10 +166,10 @@ public class CardPanel extends JPanel{
 			AffineTransform at = new AffineTransform();
 			
 			//at.rotate(Math.PI/2);
-			at.translate(cardHeight, (i*cardWidth) + ((getHeight()/2)-(leftCards.size()*cardWidth)/2));
+			at.translate(cardHeight+cardBorder, ((i+leftDeadCards.size())*cardWidth) + ((getHeight()/2)-((leftCards.size()+leftDeadCards.size())*cardWidth)/2));
 			at.rotate(Math.PI/2);
 				
-			 img = ImageIO.read(new File((leftCards.get(i).getFront())));
+			 img = ImageIO.read(new File((leftCards.get(i).getBack())));
 			 
 			 at.scale((cardWidth*1.0)/img.getWidth(), (cardHeight*1.0)/img.getHeight());
 			 
@@ -86,33 +183,99 @@ public class CardPanel extends JPanel{
 		
 		
 		
+		try{
+			BufferedImage isk;
+			iskNum = gs.getPlayers().get(1).getIsk(); 
+			
+			isk = ImageIO.read(new File(("images/isk.png")));
+			 
+			 int x = cardBorder;
+			 int y = ((leftCards.size()+leftDeadCards.size())*cardWidth) + ((getHeight()/2)-((leftCards.size()+leftDeadCards.size())*cardWidth)/2)+iskDist;
+			 
+			 g.drawImage(isk,x,y, iskSize, iskSize, null);
+			 
+			 
+			 g.setFont(new Font("TimesRoman", Font.BOLD, 20)); 
+			 g.setColor(Color.white);
+			 g.drawString(""+iskNum+" ISKs", x,y+iskSize+iskDist);
+			 
+			} catch (IOException e){
+				System.out.println("FAILED");
+			}
+		
+		
+		
+		
+		
+		
+		
 		//Top Cards
 		
 		List<Card> topCards = gs.getPlayers().get(2).getLivingCards();
+		List<Card> topDeadCards = gs.getPlayers().get(2).getDeadCards();
 
-		for(int i = 0; i < topCards.size(); i++){
+		for(int i = 0; i < topDeadCards.size(); i++){
 			BufferedImage img = null;
 			
 			try{
 			 img = ImageIO.read(new File((topCards.get(i).getFront())));
-			 g.drawImage(img, (i*cardWidth)+(getWidth()/2-(topCards.size()*cardWidth)/2),0, 100, 150, null);
+			 g.drawImage(img, (i*cardWidth)+(getWidth()/2-((topCards.size()+topDeadCards.size())*cardWidth)/2),cardBorder, 100, 150, null);
 			} catch (IOException e){
 			}
 		}
 		
 		
+		
+		for(int i = 0; i < topCards.size(); i++){
+			BufferedImage img = null;
+			
+			try{
+			 img = ImageIO.read(new File((topCards.get(i).getBack())));
+			 g.drawImage(img, ((i+topDeadCards.size())*cardWidth)+(getWidth()/2-((topCards.size()+topDeadCards.size())*cardWidth)/2),cardBorder, 100, 150, null);
+			} catch (IOException e){
+			}
+		}
+		
+		
+		
+		try{
+			BufferedImage isk;
+			iskNum = gs.getPlayers().get(2).getIsk(); 
+			
+			isk = ImageIO.read(new File(("images/isk.png")));
+			 
+			 int x = (topCards.size()+topDeadCards.size())+(getWidth()/2-((topCards.size()+topDeadCards.size())*cardWidth)/2)-iskSize-iskDist;
+			 int y = iskDist;//((leftCards.size()+leftDeadCards.size())*cardWidth) + ((getHeight()/2)-((leftCards.size()+leftDeadCards.size())*cardWidth)/2)+iskDist;
+			 
+			 g.drawImage(isk,x,y, iskSize, iskSize, null);
+			 
+			 
+			 g.setFont(new Font("TimesRoman", Font.BOLD, 20)); 
+			 g.setColor(Color.white);
+			 g.drawString(""+iskNum+" ISKs", x,y+iskSize+iskDist);
+			 
+			} catch (IOException e){
+				System.out.println("FAILED");
+			}
+		
+		
+		
+		
 		//Right Cards
 		
 		List<Card> rightCards = gs.getPlayers().get(3).getLivingCards();
+		List<Card> rightDeadCards = gs.getPlayers().get(3).getDeadCards();
 		
-		for(int i = 0; i < leftCards.size(); i++){
+		
+		
+		for(int i = 0; i < rightDeadCards.size(); i++){
 			BufferedImage img = null;
 			
 			try{
 			AffineTransform at = new AffineTransform();
 			
 			//at.rotate(Math.PI/2);
-			at.translate(getWidth()-cardHeight, (i*cardWidth)+cardWidth + ((getHeight()/2)-(rightCards.size()*cardWidth)/2));
+			at.translate(getWidth()-cardHeight-cardBorder, (i*cardWidth)+cardWidth + ((getHeight()/2)-((rightCards.size()+rightDeadCards.size())*cardWidth)/2));
 			at.rotate(-Math.PI/2);
 				
 			 img = ImageIO.read(new File((rightCards.get(i).getFront())));
@@ -128,10 +291,48 @@ public class CardPanel extends JPanel{
 		}
 		
 		
+		for(int i = 0; i < rightCards.size(); i++){
+			BufferedImage img = null;
+			
+			try{
+			AffineTransform at = new AffineTransform();
+			
+			//at.rotate(Math.PI/2);
+			at.translate(getWidth()-cardHeight-cardBorder, (i*cardWidth)+cardWidth + ((getHeight()/2)-(rightCards.size()*cardWidth)/2));
+			at.rotate(-Math.PI/2);
+				
+			 img = ImageIO.read(new File((rightCards.get(i).getBack())));
+			 
+			 at.scale((cardWidth*1.0)/img.getWidth(), (cardHeight*1.0)/img.getHeight());
+			 
+			 g2d.drawImage(img, at, null);
+			
+			
+			
+			} catch (IOException e){
+			}
+		}
 		
-		
-		
-		//
+		try{
+			BufferedImage isk;
+			iskNum = gs.getPlayers().get(3).getIsk(); 
+			
+			isk = ImageIO.read(new File(("images/isk.png")));
+			 
+			 int x = getWidth()-iskSize-iskDist;
+			 int y = ((getHeight()/2)-((rightCards.size()+rightDeadCards.size())*cardWidth)/2)+iskDist- ((rightCards.size()+rightDeadCards.size())*cardWidth)+iskSize;
+			 
+			 g.drawImage(isk,x,y, iskSize, iskSize, null);
+			 
+			 
+			 g.setFont(new Font("TimesRoman", Font.BOLD, 20)); 
+			 g.setColor(Color.white);
+			 g.drawString(""+iskNum+" ISKs", x,y+iskSize+iskDist);
+			 
+			} catch (IOException e){
+				System.out.println("FAILED");
+			}
+
 		
 		
 	}
