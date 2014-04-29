@@ -212,7 +212,7 @@ public class GameController {
     }
 
     public List<Move> getValidMoves(GameState gS) {
-        return getValidMoves(gS, gS.getPlayers().get(0));
+        return getValidMoves(gS, game.getHumanPlayer());
     }
 
 

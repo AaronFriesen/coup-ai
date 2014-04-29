@@ -49,7 +49,7 @@ public class CoupGame implements Game {
         CoupPanel.getInstance().setState(gameState);
     }
 
-    public void setPlayers(List<Player> l) {
+    public void setPlayers(Player[] l) {
         this.gameState.setPlayers(l);
     }
 
@@ -74,10 +74,10 @@ public class CoupGame implements Game {
     }
 
     public void aiTurns() {
-        List<Player> players = this.gameState.getPlayers();
+        Player[] players = this.gameState.getPlayers();
         GameController control = GameController.getInstance();
-        for (int i = 0; i < players.size(); i++) {
-            Player cur = players.get(i);
+        for (int i = 0; i < players.length; i++) {
+            Player cur = players[i];
             if (cur instanceof CompPlayer) {
                 List<Move> valids = control.getValidMoves(this.gameState, cur);
                 Move move = cur.makeMove(valids);

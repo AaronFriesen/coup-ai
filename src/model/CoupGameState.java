@@ -8,16 +8,19 @@ public class CoupGameState implements GameState {
 
     private static final int NUM_PLAYERS = 4;
 
-    private List<Player> players;
+
+
+    private CoupPlayer[] players;
+
     private int activePlayer;
     private Deck deck;
 
     private Player humanPlayer;
     public CoupGameState(CoupGameState c) { //copy constructor
-        players = new ArrayList<Player>();
-        for (Player p : c.players) {
-            Player pc = p.clone();
-            players.add(pc);
+        players = new CoupPlayer[4];
+        for (int i = 0; i < c.players.length; i++) {
+            this.players[i] = (CoupPlayer)c.players[i].clone();
+
         }
         this.deck = c.deck.clone();
         this.activePlayer = c.activePlayer;
@@ -25,12 +28,14 @@ public class CoupGameState implements GameState {
     }
 
     public CoupGameState() {
-        players = new ArrayList<Player>();
+        players = new CoupPlayer[4];
         for (int i = 1; i < NUM_PLAYERS; i++) {
-            players.add(new CompPlayer());
+            players[i] = (new CompPlayer());
+            players[i].myNum = i;
         }
         humanPlayer = new CoupPlayer();
-        players.add(humanPlayer);
+        players[0] = (CoupPlayer)(humanPlayer);
+        players[0].myNum = 0;
         this.deck = new Deck();
 
         for (Player p : players) {
@@ -43,13 +48,13 @@ public class CoupGameState implements GameState {
         this.activePlayer = 0;
     }
 
-    public List<Player> getPlayers() {
+    public Player[] getPlayers() {
         return this.players;
     }
 
     public Player getCurrentPlayer() {
 
-        return players.get(activePlayer);
+        return players[activePlayer];
     }
 
     public Player getHumanPlayer() {
@@ -62,12 +67,12 @@ public class CoupGameState implements GameState {
         int newSource = 0;
         int newTarget = 0;
 
-        for (int i = 0; i < players.size(); i++) {
-            if (newState.players.get(i).equals(source)) {
+        for (int i = 0; i < players.length; i++) {
+            if (newState.players[i].equals(source)) {
                 newSource = i;
             }
 
-            if (newState.players.get(i).equals(target)) {
+            if (newState.players[i].equals(target)) {
                 newTarget = i;
             }
 
@@ -77,24 +82,24 @@ public class CoupGameState implements GameState {
 
         switch (m) {
             case INCOME:
-                newState.players.get(activePlayer).addIsk(1); break;
+                newState.players[activePlayer].addIsk(1); break;
             case FOREIGN_AID:
-                newState.players.get(activePlayer).addIsk(2); break;
+                newState.players[activePlayer].addIsk(2); break;
             case COUP:
-                newState.players.get(activePlayer).removeIsk(7);
-                newState.players.get(newTarget).killCard(Card.DUKE); break;
+                newState.players[activePlayer].removeIsk(7);
+                newState.players[newTarget].killCard(Card.DUKE); break;
             case TAX:
-                newState.players.get(activePlayer).addIsk(3); break;
+                newState.players[activePlayer].addIsk(3); break;
             case ASSASSINATE:
-                newState.players.get(activePlayer).removeIsk(3);
-                newState.players.get(newTarget).killCard(Card.DUKE); break;
+                newState.players[activePlayer].removeIsk(3);
+                newState.players[newTarget].killCard(Card.DUKE); break;
             case EXCHANGE:
                 List<Card> newCards = new ArrayList<Card>();
                 newCards.add(newState.deck.draw());
                 newCards.add(newState.deck.draw());
-                newState.players.get(activePlayer).setLivingCards(newCards); break;
+                newState.players[activePlayer].setLivingCards(newCards); break;
             case STEAL:
-                newState.players.get(activePlayer).addIsk(newState.players.get(newTarget).stealFrom()); break;
+                newState.players[activePlayer].addIsk(newState.players[newTarget].stealFrom()); break;
             default: break;
         }
 
@@ -109,35 +114,35 @@ public class CoupGameState implements GameState {
         int newCaller = 0;
         int newTarget = 0;
 
-        for (int i = 0; i < newState.players.size(); i++) {
-            if (newState.players.get(i).equals(caller)) {
+        for (int i = 0; i < newState.players.length; i++) {
+            if (newState.players[i].equals(caller)) {
                 newCaller = i;
             }
 
-            if (newState.players.get(i).equals(target)) {
+            if (newState.players[i].equals(target)) {
                 newTarget = i;
             }
 
         }
         GameController gc = GameController.getInstance();
-        gc.playerChooseDeadCard(newState.players.get(newCaller));
+        gc.playerChooseDeadCard(newState.players[newCaller]);
 
         Card replacement = deck.draw();
         switch (bluffType) {
             case CALL_BLUFF_AMBASSADOR:
-                newState.players.get(newTarget).replaceCard(Card.AMBASSADOR, replacement);
+                newState.players[newTarget].replaceCard(Card.AMBASSADOR, replacement);
                 deck.discardAndShuffle(Card.AMBASSADOR); break;
             case CALL_BLUFF_ASSASSIN:
-                newState.players.get(newTarget).replaceCard(Card.ASSASSIN, replacement);
+                newState.players[newTarget].replaceCard(Card.ASSASSIN, replacement);
                 deck.discardAndShuffle(Card.ASSASSIN); break;
             case CALL_BLUFF_CAPTAIN:
-                newState.players.get(newTarget).replaceCard(Card.CAPTAIN, replacement);
+                newState.players[newTarget].replaceCard(Card.CAPTAIN, replacement);
                 deck.discardAndShuffle(Card.CAPTAIN); break;
             case CALL_BLUFF_CONTESSA:
-                newState.players.get(newTarget).replaceCard(Card.CONTESSA, replacement);
+                newState.players[newTarget].replaceCard(Card.CONTESSA, replacement);
                 deck.discardAndShuffle(Card.CONTESSA); break;
             case CALL_BLUFF_DUKE:
-                newState.players.get(newTarget).replaceCard(Card.DUKE, replacement);
+                newState.players[newTarget].replaceCard(Card.DUKE, replacement);
                 deck.discardAndShuffle(Card.DUKE); break;
         }
 
@@ -147,15 +152,15 @@ public class CoupGameState implements GameState {
     public GameState resolveSuccessfulCall(Move bluffType) {
         CoupGameState newState = new CoupGameState(this);
         GameController gc = GameController.getInstance();
-        gc.playerChooseDeadCard(newState.players.get(activePlayer));
+        gc.playerChooseDeadCard(newState.players[activePlayer]);
         newState.activePlayer++;
         newState.activePlayer %= NUM_PLAYERS;
 
         return newState;
     }
 
-    public void setPlayers(List<Player> l) {
-        this.players = l;
+    public void setPlayers(Player[] l) {
+        this.players = (CoupPlayer[])l;
     }
 
     public String toString() {
