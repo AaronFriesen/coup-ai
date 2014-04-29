@@ -97,7 +97,7 @@ public class CardPanel extends JPanel{
 			BufferedImage img = null;
 			
 			try{
-			 img = ImageIO.read(new File((playerCards.get(i).getBack())));
+			 img = ImageIO.read(new File((playerCards.get(i).getFront())));
 			 g.drawImage(img, ((i+playerCards.size())*cardWidth)+(getWidth()/2-((playerCards.size()+playerDeadCards.size())*cardWidth)/2),getHeight()-cardHeight-cardBorder, 100, 150, null);
 			} catch (IOException e){
 			}
@@ -169,7 +169,7 @@ public class CardPanel extends JPanel{
 			at.translate(cardHeight+cardBorder, ((i+leftDeadCards.size())*cardWidth) + ((getHeight()/2)-((leftCards.size()+leftDeadCards.size())*cardWidth)/2));
 			at.rotate(Math.PI/2);
 				
-			 img = ImageIO.read(new File((leftCards.get(i).getBack())));
+			 img = ImageIO.read(new File((leftCards.get(i).getFront())));
 			 
 			 at.scale((cardWidth*1.0)/img.getWidth(), (cardHeight*1.0)/img.getHeight());
 			 
@@ -230,7 +230,7 @@ public class CardPanel extends JPanel{
 			BufferedImage img = null;
 			
 			try{
-			 img = ImageIO.read(new File((topCards.get(i).getBack())));
+			 img = ImageIO.read(new File((topCards.get(i).getFront())));
 			 g.drawImage(img, ((i+topDeadCards.size())*cardWidth)+(getWidth()/2-((topCards.size()+topDeadCards.size())*cardWidth)/2),cardBorder, 100, 150, null);
 			} catch (IOException e){
 			}
@@ -301,7 +301,7 @@ public class CardPanel extends JPanel{
 			at.translate(getWidth()-cardHeight-cardBorder, (i*cardWidth)+cardWidth + ((getHeight()/2)-(rightCards.size()*cardWidth)/2));
 			at.rotate(-Math.PI/2);
 				
-			 img = ImageIO.read(new File((rightCards.get(i).getBack())));
+			 img = ImageIO.read(new File((rightCards.get(i).getFront())));
 			 
 			 at.scale((cardWidth*1.0)/img.getWidth(), (cardHeight*1.0)/img.getHeight());
 			 
