@@ -5,6 +5,8 @@ import model.CoupGameState;
 import view.CoupPanel;
 import model.CoupGame;
 import model.Game;
+import javax.swing.*;
+import java.awt.*;
 
 public class App {
     public static void main(String ... args) {
@@ -14,7 +16,7 @@ public class App {
         JFrame frame = new JFrame("Play Coup!");
         Game game = new CoupGame();
         CoupPanel coupPanel = new CoupPanel();
-        coupPanel.setState(game.getGameState());
+        coupPanel.setState(game.getState());
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(coupPanel);
