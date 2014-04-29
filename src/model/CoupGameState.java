@@ -14,7 +14,8 @@ public class CoupGameState implements GameState {
     public CoupGameState(CoupGameState c) { //copy constructor
         players = new ArrayList<Player>();
         for (Player p : c.players) {
-            players.add(p.clone());
+            Player pc = p.clone();
+            players.add(pc);
         }
         this.deck = c.deck.clone();
         this.activePlayer = c.activePlayer;
@@ -23,9 +24,10 @@ public class CoupGameState implements GameState {
 
     public CoupGameState() {
         players = new ArrayList<Player>();
-        for (int i = 0; i < NUM_PLAYERS; i++) {
-            players.add(new CoupPlayer());
+        for (int i = 1; i < NUM_PLAYERS; i++) {
+            players.add(new CompPlayer());
         }
+        players.add(new CoupPlayer());
         this.deck = new Deck();
 
         for (Player p : players) {
@@ -43,7 +45,7 @@ public class CoupGameState implements GameState {
     }
 
     public Player getCurrentPlayer() {
-    	
+
         return players.get(activePlayer);
     }
 

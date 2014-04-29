@@ -47,11 +47,15 @@ public class GameController {
     }
 
     public void pushAction(Action m) {
+        if (m.move == null) throw new RuntimeException();
         stack.push(m);
     }
 
     public void executeActions() {
         //go from the top down
+
+        System.out.println("stack looks like: " + stack);
+
         while (!stack.isEmpty()) {
             Action a = stack.pop();
             Move m = a.move;
@@ -214,7 +218,6 @@ public class GameController {
 
     private boolean stackContainsMove(Move m) {
         for (Action a : stack) {
-            System.out.println(a);
             if (m.equals(a.move)) {
                 return true;
             }

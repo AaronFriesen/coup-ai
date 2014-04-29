@@ -76,7 +76,7 @@ public class CoupGame implements Game {
             Player cur = players.get(i);
             List<Move> valids = control.getValidMoves(this.gameState, cur);
             Move move = cur.makeMove(valids);
-            System.out.println("player " + cur + " wants to make move " + move + "out of " + valids);
+            System.out.println(cur + " wants to make move " + move + "out of " + valids);
             control.pushAction(new Action(cur, move));
         }
         control.executeActions();

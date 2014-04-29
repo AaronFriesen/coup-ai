@@ -14,8 +14,11 @@ public class CoupPlayer implements Player {
 	protected boolean isAlive;
 	protected static Random randy = new Random();
 
-    public CoupPlayer() {
 
+	private static int num = 0;
+	public int myNum = 0;
+    public CoupPlayer() {
+		myNum = num++;
     	numIsk = 2;
     	livingCards = new ArrayList();
     	deadCards = new ArrayList();
@@ -113,6 +116,7 @@ public class CoupPlayer implements Player {
 
     	newGuy.isAI = this.isAI;
     	newGuy.isAlive = this.isAlive;
+		newGuy.myNum = myNum;
     	return newGuy;
 
 
@@ -123,7 +127,7 @@ public class CoupPlayer implements Player {
 			System.out.println("DO NOT CALL MAKEMOVE ON THE PLAYER");
 			return null;
 		}
-		System.out.println("length of moves:" + valids.size());
+		System.out.println("length of moves: " + valids.size());
 		return valids.get(randy.nextInt(valids.size()));
 	}
 
@@ -139,5 +143,9 @@ public class CoupPlayer implements Player {
 
 	public int hashCode() {
 		return this.numIsk + this.livingCards.hashCode();
+	}
+
+	public String toString() {
+		return "Player " + myNum;
 	}
 }

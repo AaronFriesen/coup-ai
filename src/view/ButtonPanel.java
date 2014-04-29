@@ -86,7 +86,7 @@ public class ButtonPanel extends JPanel{
 				public void actionPerformed(ActionEvent e) {
 					GameController control = GameController.getInstance();
 					System.out.println("player 1 took " + m.toString() + " a derpa derp");
-					control.pushAction(new Action(control.getCurrentPlayer(), m));
+					if (m != null) control.pushAction(new Action(control.getCurrentPlayer(), m));
 					control.aiTurns();
 				}
 			});

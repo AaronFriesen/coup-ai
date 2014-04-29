@@ -7,7 +7,7 @@ public class Action {
     public Move move;
     public Player player;
 
-    public Action(Player player, Move m) {
+    public Action(Player player, Move move) {
         this.move = move;
         this.player = player;
     }
