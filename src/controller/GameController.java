@@ -108,6 +108,7 @@ public class GameController {
                 }
             }
         }
+        System.out.println(game.getState());
     }
 
 
