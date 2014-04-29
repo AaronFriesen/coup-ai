@@ -5,6 +5,7 @@ import model.CoupGameState;
 import model.GameState;
 import model.Action;
 import model.Move;
+import java.util.List;
 
 public class CoupGame implements Game {
     private GameState gameState;
@@ -36,7 +37,7 @@ public class CoupGame implements Game {
         }
     }
 
-    public void makeMove(Player p, Move m) {
+    public void makeMove(Move m, Player p) {
         makeMove(new Action(p, m));
     }
 
@@ -56,7 +57,7 @@ public class CoupGame implements Game {
         this.gameState = this.gameState.resolveSuccessfulCall(bluffType);
     }
 
-    public GameState getGameState() {
+    public GameState getState() {
         return this.gameState;
     }
 

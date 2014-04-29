@@ -20,7 +20,7 @@ public class CoupGameState implements GameState {
 
     public CoupGameState() {
         players = new ArrayList<Player>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 7; i++) {
             players.add(new CoupPlayer());
         }
         this.deck = new Deck();

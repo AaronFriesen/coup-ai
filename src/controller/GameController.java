@@ -1,12 +1,15 @@
 package controller;
 
 import model.Game;
+import model.Card;
 import model.Player;
 import model.Action;
 import model.Move;
+import model.CoupGame;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedList;
+
 
 /**
  * This class implements taking game turns and contains the logic for blocking,

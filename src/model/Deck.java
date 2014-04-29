@@ -15,12 +15,14 @@ public class Deck {
             cards.add(c);
             cards.add(c);
             cards.add(c);
+            System.out.println("adding card: " + c);
         }
 
         Collections.shuffle(cards);
     }
 
     public Card draw() {
+    	System.out.println(cards);
         return cards.remove(0);
     }
 
