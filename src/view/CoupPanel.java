@@ -3,45 +3,125 @@ package view;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
 import java.io.*;
-import javax.swing.*;        
+import javax.swing.*; 
+import java.awt.geom.AffineTransform;
+
 import model.*;
 import java.util.List;
 
 public class CoupPanel extends JPanel{
 	
 	private GameState gs;
+	final int cardWidth = 100;
+	final int cardHeight = 150;
 	
 	public CoupPanel(){
-		this.setPreferredSize(new Dimension(400,400));
-		
-		
+		this.setPreferredSize(new Dimension(600,600));
 	}
 	
 	
 	public void paint(Graphics g) {
 
+		Graphics2D g2d = (Graphics2D) g;
+		
+		
 		//Player Cards
-		//g.drawImage(new Image(), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
-		List<Card> playerCards = gs.getPlayers().get(0).getLivingCards();
-		
-		//BufferedImage bi;
-		
-		BufferedImage img = null;
-		
-		try{
-		 img = ImageIO.read(new File((playerCards.get(0).getFront())));
-		 g.drawImage(img, 0, 0, 100, 150, null);
-		} catch (IOException e){
-			
-		}
 
+		List<Card> playerCards = gs.getPlayers().get(0).getLivingCards();
+
+		for(int i = 0; i < playerCards.size(); i++){
+			BufferedImage img = null;
+			
+			try{
+			 img = ImageIO.read(new File((playerCards.get(i).getFront())));
+			 g.drawImage(img, (i*cardWidth)+(getWidth()/2-(playerCards.size()*cardWidth)/2),getHeight()-cardHeight, 100, 150, null);
+			} catch (IOException e){
+			}
+		}
+		
+		
+		//Left Cards
+		
+		List<Card> leftCards = gs.getPlayers().get(1).getLivingCards();
+		
+		for(int i = 0; i < leftCards.size(); i++){
+			BufferedImage img = null;
+			
+			try{
+			AffineTransform at = new AffineTransform();
+			
+			//at.rotate(Math.PI/2);
+			at.translate(cardHeight, (i*cardWidth) + ((getHeight()/2)-(leftCards.size()*cardWidth)/2));
+			at.rotate(Math.PI/2);
+				
+			 img = ImageIO.read(new File((leftCards.get(i).getFront())));
+			 
+			 at.scale((cardWidth*1.0)/img.getWidth(), (cardHeight*1.0)/img.getHeight());
+			 
+			 g2d.drawImage(img, at, null);
+			
+			
+			
+			} catch (IOException e){
+			}
+		}
+		
+		
+		
+		//Top Cards
+		
+		List<Card> topCards = gs.getPlayers().get(2).getLivingCards();
+
+		for(int i = 0; i < topCards.size(); i++){
+			BufferedImage img = null;
+			
+			try{
+			 img = ImageIO.read(new File((topCards.get(i).getFront())));
+			 g.drawImage(img, (i*cardWidth)+(getWidth()/2-(topCards.size()*cardWidth)/2),0, 100, 150, null);
+			} catch (IOException e){
+			}
+		}
+		
+		
+		//Right Cards
+		
+		List<Card> rightCards = gs.getPlayers().get(3).getLivingCards();
+		
+		for(int i = 0; i < leftCards.size(); i++){
+			BufferedImage img = null;
+			
+			try{
+			AffineTransform at = new AffineTransform();
+			
+			//at.rotate(Math.PI/2);
+			at.translate(getWidth()-cardHeight, (i*cardWidth)+cardWidth + ((getHeight()/2)-(rightCards.size()*cardWidth)/2));
+			at.rotate(-Math.PI/2);
+				
+			 img = ImageIO.read(new File((rightCards.get(i).getFront())));
+			 
+			 at.scale((cardWidth*1.0)/img.getWidth(), (cardHeight*1.0)/img.getHeight());
+			 
+			 g2d.drawImage(img, at, null);
+			
+			
+			
+			} catch (IOException e){
+			}
+		}
+		
+		
+		
+		
+		
+		//
+		
 		
 	}
 	
 	public void setState(GameState gs){
-		
 		this.gs = gs;	
 	}
 	
