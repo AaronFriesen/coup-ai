@@ -151,4 +151,12 @@ public class CoupGameState implements GameState {
         this.players = l;
     }
 
+    public String toString() {
+        String ret = "Game with active player " + activePlayer;
+        for (Player p : players) {
+            ret += "\n" + p;
+        }
+        return ret;
+    }
+
 }

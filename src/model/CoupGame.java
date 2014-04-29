@@ -72,12 +72,14 @@ public class CoupGame implements Game {
     public void aiTurns() {
         List<Player> players = this.gameState.getPlayers();
         GameController control = GameController.getInstance();
-        for (int i = 1; i < players.size(); i++) {
+        for (int i = 0; i < players.size(); i++) {
             Player cur = players.get(i);
-            List<Move> valids = control.getValidMoves(this.gameState, cur);
-            Move move = cur.makeMove(valids);
-            System.out.println(cur + " wants to make move " + move + "out of " + valids);
-            control.pushAction(new Action(cur, move));
+            if (cur instanceof CompPlayer) {
+                List<Move> valids = control.getValidMoves(this.gameState, cur);
+                Move move = cur.makeMove(valids);
+                System.out.println(cur + " wants to make move " + move + " out of " + valids);
+                control.pushAction(new Action(cur, move));
+            }
         }
         control.executeActions();
     }

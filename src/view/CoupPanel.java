@@ -18,7 +18,8 @@ public class CoupPanel extends JPanel{
 	private GameState gs;
 	final int cardWidth = 100;
 	final int cardHeight = 150;
-
+	private ButtonPanel bp;
+	private CardPanel cp;
 	private static CoupPanel instance;
 
 	public static CoupPanel getInstance() {
@@ -28,6 +29,10 @@ public class CoupPanel extends JPanel{
 	public CoupPanel(){
 		this.setPreferredSize(new Dimension(600,600));
 		this.setLayout(new BorderLayout());
+		bp = new ButtonPanel();
+		cp = new CardPanel();
+		this.add(bp, BorderLayout.WEST);
+		this.add(cp, BorderLayout.CENTER);
 	}
 
 
@@ -36,11 +41,9 @@ public class CoupPanel extends JPanel{
 
 	public void setState(GameState gs){
 		this.gs = gs;
-		ButtonPanel bp = new ButtonPanel();
-		CardPanel cp = new CardPanel();
 		cp.setState(gs);
-		this.add(bp, BorderLayout.WEST);
-		this.add(cp, BorderLayout.CENTER);
+		bp = new ButtonPanel();
+		add(bp, BorderLayout.WEST);
 		GameController instance = GameController.getInstance();
 		bp.populate(instance.getValidMoves(gs));
 

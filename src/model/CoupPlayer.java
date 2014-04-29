@@ -128,7 +128,7 @@ public class CoupPlayer implements Player {
 			return null;
 		}
 		System.out.println("length of moves: " + valids.size());
-		return valids.get(randy.nextInt(valids.size()));
+		return Move.PASS;//valids.get(randy.nextInt(valids.size()));
 	}
 
 
@@ -146,6 +146,7 @@ public class CoupPlayer implements Player {
 	}
 
 	public String toString() {
-		return "Player " + myNum;
+		return "Player " + myNum + " with cards " + livingCards + " " + deadCards
+				+ " with " + numIsk + "isk";
 	}
 }
