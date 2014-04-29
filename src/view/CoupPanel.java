@@ -13,6 +13,13 @@ public class CoupPanel extends JPanel{
 	
 	private GameState gs;
 	
+	public CoupPanel(){
+		this.setPreferredSize(new Dimension(400,400));
+		
+		
+	}
+	
+	
 	public void paint(Graphics g) {
 
 		//Player Cards
@@ -25,7 +32,7 @@ public class CoupPanel extends JPanel{
 		
 		try{
 		 img = ImageIO.read(new File((playerCards.get(0).getFront())));
-		 g.drawImage(img, 0, 0, null);
+		 g.drawImage(img, 0, 0, 100, 150, null);
 		} catch (IOException e){
 			
 		}
