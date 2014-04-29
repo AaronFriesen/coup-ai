@@ -1,6 +1,7 @@
 package controller;
 
 import model.Game;
+import model.GameState;
 import model.Card;
 import model.Player;
 import model.Action;
@@ -117,5 +118,107 @@ public class GameController {
         return deadCard;
     }
 
+
+
+    /**
+     * This method makes me only mostly completely ashamed. Probably should be made
+     * into something less fugly.
+     *
+     */
+    public List<Move> getValidMoves(GameState gS, Player p) {
+        //probably for use by bots
+        List<Move> legals = new LinkedList<Move>();
+        if (p.equals(gS.getCurrentPlayer())) { //if it's player 1's turn
+            if (stack.isEmpty()) {
+                if (p.getIsk() < 10) { //if you have less than 10, you can do standard moves
+                    legals.add(Move.INCOME);
+                    legals.add(Move.FOREIGN_AID);
+                    if (p.getIsk() >= 7) legals.add(Move.COUP); //if you have 7 or more you can even coup!
+                    legals.add(Move.TAX);
+                    legals.add(Move.ASSASSINATE);
+                    legals.add(Move.EXCHANGE);
+                    legals.add(Move.STEAL);
+                } else { //otherwise, you gotta coup
+                    legals.add(Move.COUP);
+                }
+            } else if (stackContainsMove(Move.CALL_BLUFF_ASSASSIN)) { //if someone says you don't have the assassin
+                if (p.getLivingCards().contains(Card.ASSASSIN)) { //and you do
+                    legals.add(Move.BLOCK_BLUFF_ASSASSIN); //you can refute that
+                }
+                legals.add(Move.PASS); //technically you can always pass but why
+            } else if (stackContainsMove(Move.CALL_BLUFF_AMBASSADOR)) { //"you don't have the ambassador"
+                if (p.getLivingCards().contains(Card.AMBASSADOR)) {//"yes I do"
+                    legals.add(Move.BLOCK_BLUFF_AMBASSADOR);
+                }
+                legals.add(Move.PASS);
+            } else if (stackContainsMove(Move.CALL_BLUFF_CAPTAIN)) {//"you don't have the captain"
+                if (p.getLivingCards().contains(Card.CAPTAIN)) {//"yes I do"
+                    legals.add(Move.BLOCK_BLUFF_CAPTAIN);
+                }
+                legals.add(Move.PASS);
+            } else if (stackContainsMove(Move.CALL_BLUFF_CONTESSA)) {//"you don't have the contessa"
+                if (p.getLivingCards().contains(Card.CONTESSA)) {//"yes... I do!"
+                    legals.add(Move.BLOCK_BLUFF_CONTESSA);
+                }
+                legals.add(Move.PASS);
+            } else if (stackContainsMove(Move.CALL_BLUFF_DUKE)) {//"etc etc duke"
+                if (p.getLivingCards().contains(Card.DUKE)) {//"jesus christ stop already"
+                    legals.add(Move.BLOCK_BLUFF_DUKE);
+                }
+                legals.add(Move.PASS);
+            } else if (stackContainsMove(Move.BLOCK_FOREIGN_AID)) {//if they said they had a duke
+                legals.add(Move.PASS);
+                legals.add(Move.CALL_BLUFF_DUKE); //you can challenge
+            } else if (stackContainsMove(Move.BLOCK_ASSASSINATE)) {//if they said they had a contessa
+                legals.add(Move.PASS);
+                legals.add(Move.CALL_BLUFF_CONTESSA); //etc
+            } else if (stackContainsMove(Move.BLOCK_STEAL_AMBASSADOR)) { //if they say they know an ambassador
+                legals.add(Move.PASS);
+                legals.add(Move.CALL_BLUFF_AMBASSADOR); //etc
+            } else if (stackContainsMove(Move.BLOCK_STEAL_CAPTAIN)) { //same with captain
+                legals.add(Move.PASS);
+                legals.add(Move.CALL_BLUFF_CAPTAIN);
+            }
+        } else { //otherwise, it's ANOTHER PLAYER!
+            legals.add(Move.PASS); //can always pass. Will /usually/ pass.
+            if (stackContainsMove(Move.EXCHANGE)) { //no exchanging
+                legals.add(Move.CALL_BLUFF_AMBASSADOR);
+            }
+            if (stackContainsMove(Move.FOREIGN_AID)) { //no foreign aid
+                legals.add(Move.BLOCK_FOREIGN_AID);
+            }
+            if (stack.contains(new Action(p, Move.ASSASSINATE))) { //no killing
+                legals.add(Move.BLOCK_ASSASSINATE);
+                legals.add(Move.CALL_BLUFF_ASSASSIN);
+            }
+            if (stack.contains(new Action(p, Move.STEAL))) { //no stealing
+                legals.add(Move.BLOCK_STEAL_AMBASSADOR);
+                legals.add(Move.BLOCK_STEAL_CAPTAIN);
+                legals.add(Move.CALL_BLUFF_CAPTAIN);
+            }
+            if (stackContainsMove(Move.BLOCK_ASSASSINATE)) { //no kill blocking
+                legals.add(Move.CALL_BLUFF_CONTESSA);
+            }
+            if (stackContainsMove(Move.TAX)) { //no taxing
+                legals.add(Move.CALL_BLUFF_DUKE);
+            }
+        }
+
+        return legals;
+    }
+
+    public List<Move> getValidMoves(GameState gS) {
+        return getValidMoves(gS, gS.getPlayers().get(0));
+    }
+
+
+    private boolean stackContainsMove(Move m) {
+        for (Action a : stack) {
+            if (a.move.equals(m)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

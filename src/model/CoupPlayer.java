@@ -127,6 +127,6 @@ public class CoupPlayer implements Player {
 	}
 
 	public int hashCode() {
-		return this.numIsk + this.livingCards.hashcode();
+		return this.numIsk + this.livingCards.hashCode();
 	}
 }

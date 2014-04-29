@@ -11,4 +11,12 @@ public class Action {
         this.move = move;
         this.player = player;
     }
+
+    public boolean equals(Object o) {
+        if (o instanceof Action) {
+            Action a = (Action)o;
+            return this.move == a.move && this.player.equals(a.player);
+        }
+        return false;
+    }
 }
