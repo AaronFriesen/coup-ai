@@ -1,8 +1,10 @@
 package view;
 
 
-import java.awt.Graphics;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.*;
 import javax.swing.*;        
 import model.*;
 import java.util.List;
@@ -17,6 +19,16 @@ public class CoupPanel extends JPanel{
 		//g.drawImage(new Image(), arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
 		List<Card> playerCards = gs.getPlayers().get(0).getLivingCards();
 		
+		//BufferedImage bi;
+		
+		BufferedImage img = null;
+		
+		try{
+		 img = ImageIO.read(new File((playerCards.get(0).getFront())));
+		 g.drawImage(img, 0, 0, null);
+		} catch (IOException e){
+			
+		}
 
 		
 	}
