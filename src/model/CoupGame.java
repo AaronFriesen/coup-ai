@@ -42,7 +42,9 @@ public class CoupGame implements Game {
     }
 
     public void makeMove(Player p1, Move m, Player target) {
+        System.out.println("Making move " + m);
         this.gameState = gameState.generateSuccessorState(p1, m, target);
+        CoupPanel.getInstance().setState(gameState);
     }
 
     public void setPlayers(List<Player> l) {
@@ -63,5 +65,15 @@ public class CoupGame implements Game {
 
     public Player getCurrentPlayer() {
         return this.gameState.getCurrentPlayer();
+    }
+
+    public void aiMoves() {
+        List<Player> players = this.gameState.getPlayers();
+        GameController control = GameController.getInstance();
+        for (int i = 1; i < players.size(); i++) {
+            Player cur = players.get(i);
+            control.pushAction(new Action(cur, cur.makeMove(control.getValidMoves(this.gameState, cur)));
+        }
+        control.executeActions();
     }
 }

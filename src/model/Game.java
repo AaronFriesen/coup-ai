@@ -14,5 +14,6 @@ public interface Game {
     GameState getState();
     Player getCurrentPlayer();
 
+    void aiTurns();
 
 }
