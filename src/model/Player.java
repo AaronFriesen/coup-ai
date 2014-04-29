@@ -23,4 +23,5 @@ public interface Player {
     Player clone();
 
 
+    Move makeMove(List<Move> valids);
 }

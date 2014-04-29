@@ -18,7 +18,7 @@ import java.util.LinkedList;
  * which are Move, Player(target) pairs.
  *
  * @author Aaron Friesen
- * @version 0.75
+ * @version 0.8
  */
 public class GameController {
 
@@ -142,27 +142,27 @@ public class GameController {
                     legals.add(Move.COUP);
                 }
             } else if (stackContainsMove(Move.CALL_BLUFF_ASSASSIN)) { //if someone says you don't have the assassin
-                if (p.getLivingCards().contains(Card.ASSASSIN)) { //and you do
+                if (p.hasCard(Card.ASSASSIN)) { //and you do
                     legals.add(Move.BLOCK_BLUFF_ASSASSIN); //you can refute that
                 }
                 legals.add(Move.PASS); //technically you can always pass but why
             } else if (stackContainsMove(Move.CALL_BLUFF_AMBASSADOR)) { //"you don't have the ambassador"
-                if (p.getLivingCards().contains(Card.AMBASSADOR)) {//"yes I do"
+                if (p.hasCard(Card.AMBASSADOR)) {//"yes I do"
                     legals.add(Move.BLOCK_BLUFF_AMBASSADOR);
                 }
                 legals.add(Move.PASS);
             } else if (stackContainsMove(Move.CALL_BLUFF_CAPTAIN)) {//"you don't have the captain"
-                if (p.getLivingCards().contains(Card.CAPTAIN)) {//"yes I do"
+                if (p.hasCard(Card.CAPTAIN)) {//"yes I do"
                     legals.add(Move.BLOCK_BLUFF_CAPTAIN);
                 }
                 legals.add(Move.PASS);
             } else if (stackContainsMove(Move.CALL_BLUFF_CONTESSA)) {//"you don't have the contessa"
-                if (p.getLivingCards().contains(Card.CONTESSA)) {//"yes... I do!"
+                if (p.hasCard(Card.CONTESSA)) {//"yes... I do!"
                     legals.add(Move.BLOCK_BLUFF_CONTESSA);
                 }
                 legals.add(Move.PASS);
             } else if (stackContainsMove(Move.CALL_BLUFF_DUKE)) {//"etc etc duke"
-                if (p.getLivingCards().contains(Card.DUKE)) {//"jesus christ stop already"
+                if (p.hasCard(Card.DUKE)) {//"jesus christ stop already"
                     legals.add(Move.BLOCK_BLUFF_DUKE);
                 }
                 legals.add(Move.PASS);
