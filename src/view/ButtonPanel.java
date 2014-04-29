@@ -22,63 +22,63 @@ import model.*;
 import java.util.List;
 
 public class ButtonPanel extends JPanel{
-	
+
 	private GameState gs;
 	private List<Move> moves;
 
-	
+
 	public ButtonPanel(){
 		this.setPreferredSize(new Dimension(200,600));
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.setBackground(Color.darkGray);
 		//this.getContentPane().setBackground(Color.black);
 	}
-	
-	
+
+
 	/*public void paint(Graphics g) {
 
 		Graphics2D g2d = (Graphics2D) g;
-		
+
 		//super();
-		
-		
-		
-		
+
+
+
+
 		//Table
-		
-		
+
+
 		BufferedImage table = null;
-		
+
 		try{
 		 table = ImageIO.read(new File(("images/oakTable.png")));
-		 
+
 		 double tiles = (getWidth()*1.0)/(1.0*table.getWidth());
 		 for(int i = 0; i < tiles; i++){
 			 for(int y = 0; y < 4*tiles; y++){
-		 
+
 				// g.drawImage(table, i*table.getWidth(),y*table.getHeight(),table.getWidth(),table.getHeight(), null);
-		 
+
 			 }
 		 }
 		} catch (IOException e){
 			System.out.println("FAILED");
 		}
-		
+
 		if(moves != null){
 			//populate(moves);
 		}
-	
+
 	}*/
-	
-	
-	
+
+
+
 	public void populate(final List<Move> moves){
-		
-		
+
+
 		this.add(Box.createVerticalGlue());
 		for(int i = 0; i < moves.size(); i++){
-			
-			
+
+
 			Move m = moves.get(i);
 			JButton a = new JButton(m.toString());
 			this.add(a);
@@ -86,25 +86,26 @@ public class ButtonPanel extends JPanel{
 				public void actionPerformed(ActionEvent e) {
 					GameController control = GameController.getInstance();
 					System.out.println("player 1 took " + m.toString() + " a derpa derp");
-					control.pushAction(new Action(control.getCurrentPlayer(), Move.INCOME));
+					control.pushAction(new Action(control.getCurrentPlayer(), m));
+					control.aiTurns();
 				}
 			});
-			
+
 		}
-		
+
 		this.add(Box.createVerticalGlue());
 		//repaint();
 	}
-	
-	
 
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
 /*
-	
+
     private static void createAndShowGUI() {
         //Create and set up the window.
         JFrame frame = new JFrame("HelloWorldSwing");
@@ -114,8 +115,8 @@ public class ButtonPanel extends JPanel{
         JLabel label = new JLabel("Hello World");
         //frame.getContentPane().add(label);
         //frame.getContentPane().setLayout(new BorderLayout());
-        
-        
+
+
 
         //Display the window.
         frame.pack();

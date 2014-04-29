@@ -5,6 +5,8 @@ import model.CoupGameState;
 import model.GameState;
 import model.Action;
 import model.Move;
+import view.CoupPanel;
+import controller.GameController;
 import java.util.List;
 
 public class CoupGame implements Game {
@@ -67,12 +69,15 @@ public class CoupGame implements Game {
         return this.gameState.getCurrentPlayer();
     }
 
-    public void aiMoves() {
+    public void aiTurns() {
         List<Player> players = this.gameState.getPlayers();
         GameController control = GameController.getInstance();
         for (int i = 1; i < players.size(); i++) {
             Player cur = players.get(i);
-            control.pushAction(new Action(cur, cur.makeMove(control.getValidMoves(this.gameState, cur)));
+            List<Move> valids = control.getValidMoves(this.gameState, cur);
+            Move move = cur.makeMove(valids);
+            System.out.println("player " + cur + " wants to make move " + move + "out of " + valids);
+            control.pushAction(new Action(cur, move));
         }
         control.executeActions();
     }

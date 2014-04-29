@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
 import java.io.*;
-import javax.swing.*; 
+import javax.swing.*;
 import java.awt.geom.AffineTransform;
 
 import model.*;
@@ -14,20 +14,26 @@ import controller.*;
 import java.util.List;
 
 public class CoupPanel extends JPanel{
-	
+
 	private GameState gs;
 	final int cardWidth = 100;
 	final int cardHeight = 150;
-	
+
+	private static CoupPanel instance;
+
+	public static CoupPanel getInstance() {
+		return instance == null ? instance = new CoupPanel() : instance;
+	}
+
 	public CoupPanel(){
 		this.setPreferredSize(new Dimension(600,600));
 		this.setLayout(new BorderLayout());
 	}
-	
-	
 
 
-	
+
+
+
 	public void setState(GameState gs){
 		this.gs = gs;
 		ButtonPanel bp = new ButtonPanel();
@@ -37,13 +43,13 @@ public class CoupPanel extends JPanel{
 		this.add(cp, BorderLayout.CENTER);
 		GameController instance = GameController.getInstance();
 		bp.populate(instance.getValidMoves(gs));
-		
+
 	}
-	
-	
-	
+
+
+
 /*
-	
+
     private static void createAndShowGUI() {
         //Create and set up the window.
         JFrame frame = new JFrame("HelloWorldSwing");
@@ -53,8 +59,8 @@ public class CoupPanel extends JPanel{
         JLabel label = new JLabel("Hello World");
         //frame.getContentPane().add(label);
         //frame.getContentPane().setLayout(new BorderLayout());
-        
-        
+
+
 
         //Display the window.
         frame.pack();

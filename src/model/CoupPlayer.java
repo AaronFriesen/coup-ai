@@ -120,8 +120,10 @@ public class CoupPlayer implements Player {
 
 	public Move makeMove(List<Move> valids) {
 		if (!isAI) {
+			System.out.println("DO NOT CALL MAKEMOVE ON THE PLAYER");
 			return null;
 		}
+		System.out.println("length of moves:" + valids.size());
 		return valids.get(randy.nextInt(valids.size()));
 	}
 

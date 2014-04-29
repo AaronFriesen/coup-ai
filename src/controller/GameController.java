@@ -33,7 +33,7 @@ public class GameController {
         //this.game.setPlayers(null); // This is where we make Player list.
         this.stack = new LinkedList<Action>();
     }
-    
+
     public static GameController getInstance() {
         return instance == null ? instance = new GameController() : instance;
     }
@@ -214,15 +214,16 @@ public class GameController {
 
     private boolean stackContainsMove(Move m) {
         for (Action a : stack) {
-            if (a.move.equals(m)) {
+            System.out.println(a);
+            if (m.equals(a.move)) {
                 return true;
             }
         }
         return false;
     }
 
-    public void aiMoves() {
-        this.game.aiMoves();
+    public void aiTurns() {
+        this.game.aiTurns();
     }
 
 }

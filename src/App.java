@@ -15,7 +15,7 @@ public class App {
 
         JFrame frame = new JFrame("Play Coup!");
         Game game = new CoupGame();
-        CoupPanel coupPanel = new CoupPanel();
+        CoupPanel coupPanel = CoupPanel.getInstance();
         coupPanel.setState(game.getState());
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
