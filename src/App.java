@@ -2,12 +2,15 @@
 //import view.JFXHelloWorld;
 import controller.GameController;
 import model.CoupGameState;
-//import view.CoupPanel;
+import view.CoupPanel;
+import model.CoupGame;
+import model.Game;
 
 public class App {
     public static void main(String ... args) {
         //here is where we start + run the program. Makefile targets this.
         //GameController myControl = GameController.getInstance();
+
         JFrame frame = new JFrame("Play Coup!");
         Game game = new CoupGame();
         CoupPanel coupPanel = new CoupPanel();
