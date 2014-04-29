@@ -1,6 +1,7 @@
 package controller;
 
 import model.Game;
+import model.Card;
 import model.Player;
 import model.Action;
 import model.Move;

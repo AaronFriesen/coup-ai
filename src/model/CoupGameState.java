@@ -6,6 +6,8 @@ import controller.*;
 
 public class CoupGameState implements GameState {
 
+    private static final int NUM_PLAYERS = 4;
+
     private List<Player> players;
     private int activePlayer;
     private Deck deck;
@@ -20,7 +22,7 @@ public class CoupGameState implements GameState {
 
     public CoupGameState() {
         players = new ArrayList<Player>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < NUM_PLAYERS; i++) {
             players.add(new CoupPlayer());
         }
         this.deck = new Deck();
@@ -135,7 +137,7 @@ public class CoupGameState implements GameState {
         GameController gc = GameController.getInstance();
         gc.playerChooseDeadCard(newState.players.get(activePlayer));
         newState.activePlayer++;
-        
+
         return newState;
     }
 

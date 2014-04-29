@@ -1,5 +1,8 @@
 package model;
 
+import model.Move;
+import model.Player;
+
 public class Action {
     public Move move;
     public Player player;
