@@ -18,6 +18,7 @@ public class CoupGameState implements GameState {
         }
         this.deck = c.deck.clone();
         this.activePlayer = c.activePlayer;
+
     }
 
     public CoupGameState() {
@@ -88,6 +89,7 @@ public class CoupGameState implements GameState {
         }
 
         newState.activePlayer++;
+        newState.activePlayer %= NUM_PLAYERS;
         return newState;
 
     }
@@ -137,6 +139,7 @@ public class CoupGameState implements GameState {
         GameController gc = GameController.getInstance();
         gc.playerChooseDeadCard(newState.players.get(activePlayer));
         newState.activePlayer++;
+        newState.activePlayer %= NUM_PLAYERS;
 
         return newState;
     }
