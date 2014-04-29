@@ -134,8 +134,13 @@ public class CoupGameState implements GameState {
         CoupGameState newState = new CoupGameState(this);
         GameController gc = GameController.getInstance();
         gc.playerChooseDeadCard(newState.players.get(activePlayer));
-
+        newState.activePlayer++;
+        
         return newState;
+    }
+
+    public void setPlayers(List<Player> l) {
+        this.players = l;
     }
 
 }

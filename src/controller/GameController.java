@@ -1,6 +1,9 @@
 package controller;
 
-import model.*;
+import model.Game;
+import model.Player;
+import model.Action;
+import model.Move;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -22,7 +25,7 @@ public class GameController {
     private static GameController instance;
 
     private GameController() {
-        // this.game = new Game(); // This is where we put concrete game.
+        this.game = new CoupGame(); // This is where we put concrete game.
         this.game.setPlayers(null); // This is where we make Player list.
         this.stack = new LinkedList<Action>();
     }
