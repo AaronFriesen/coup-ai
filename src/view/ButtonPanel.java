@@ -105,6 +105,14 @@ public class ButtonPanel extends JPanel{
 					control.aiTurns();
 				}
 			});
+			if(m == Move.COUP){
+				
+				
+				//JComboBox playersBox = new JComboBox(petStrings);
+				//petList.setSelectedIndex(4);
+				//petList.addActionListener(this);
+				System.out.println("COUP!");
+			}
 
 		}
 
