@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
 import controller.GameController;
 import model.Action;
 import model.Move;
-
+import javax.swing.JComboBox;
 
 import model.*;
 import java.util.List;
@@ -89,29 +89,79 @@ public class ButtonPanel extends JPanel{
 		this.revalidate();
 
 		//
-
+		GameController control = GameController.getInstance();
+		Player curTarget = control.getPlayers()[1];
 
 		for(int i = 0; i < moves.size(); i++){
 
-
+			
+			Player[] players = control.getPlayers();
+			String[] names = new String[]{"Player 2", "Player 3", "Player 4"};
+			JComboBox<String> playersBox = new JComboBox(names);
+			
 			Move m = moves.get(i);
 			JButton a = new JButton(m.toString());
 			this.add(a);
 			a.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					GameController control = GameController.getInstance();
+					
 					System.out.println("player 1 took " + m.toString() + " a derpa derp");
-					if (m != null) control.pushAction(new Action(control.getHumanPlayer(), m));
+					
+					if(m!= null){
+						
+						Player targetPlayer = players[1];
+						String boxSelection = (String)playersBox.getSelectedItem();
+						if(boxSelection.equals("Player 2")){
+							targetPlayer = players[1];
+						}else if(boxSelection.equals("Player 3")){
+							targetPlayer = players[2];
+						}else if(boxSelection.equals("Player 4")){
+							targetPlayer = players[3];
+						}
+						
+
+						if(m == Move.PASS){
+							//System.out.println("TESTING SELECT "+targetPlayer.toString());
+						}else if(m == Move.STEAL){
+							control.pushAction(new Action(targetPlayer, Move.STEAL));
+						}else if(m == Move.ASSASSINATE){
+							control.pushAction(new Action(targetPlayer, Move.ASSASSINATE));
+							
+						}else if(m == Move.COUP){
+							control.pushAction(new Action(targetPlayer, Move.COUP));
+						}else{
+							control.pushAction(new Action(control.getHumanPlayer(), m));
+						}
+				 
+					}
 					control.aiTurns();
 				}
 			});
-			if(m == Move.COUP){
+			
+			
+			
+			if(m == Move.PASS || m == Move.STEAL || m== Move.ASSASSINATE || m == Move.COUP){
+				
+
+				
+				playersBox.setMaximumSize(new Dimension(100,20));
 				
 				
-				//JComboBox playersBox = new JComboBox(petStrings);
-				//petList.setSelectedIndex(4);
-				//petList.addActionListener(this);
-				System.out.println("COUP!");
+				//playersBox.setSelectedIndex(4);
+				playersBox.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						JComboBox cb = (JComboBox)e.getSource();
+						String out = (String)cb.getSelectedItem();
+						
+						if(out.equals("Player 2")){
+							//curTarget = players[1];
+						}
+						
+						//System.out.println(curTarget);
+					}
+				});
+				//System.out.println("COUP!");
+				this.add(playersBox);
 			}
 
 		}

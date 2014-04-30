@@ -145,7 +145,7 @@ public class CardPanel extends JPanel{
 			at.translate(cardHeight +cardBorder, (i*cardWidth) + ((getHeight()/2)-((leftDeadCards.size()+leftCards.size())*cardWidth)/2));
 			at.rotate(Math.PI/2);
 				
-			 img = ImageIO.read(new File((leftDeadCards.get(i).getFront())));
+			 img = ImageIO.read(new File((leftDeadCards.get(i).getBack())));
 			 
 			 at.scale((cardWidth*1.0)/img.getWidth(), (cardHeight*1.0)/img.getHeight());
 			 
@@ -218,7 +218,7 @@ public class CardPanel extends JPanel{
 			BufferedImage img = null;
 			
 			try{
-			 img = ImageIO.read(new File((topCards.get(i).getFront())));
+			 img = ImageIO.read(new File((topDeadCards.get(i).getBack())));
 			 g.drawImage(img, (i*cardWidth)+(getWidth()/2-((topCards.size()+topDeadCards.size())*cardWidth)/2),cardBorder, 100, 150, null);
 			} catch (IOException e){
 			}
@@ -275,10 +275,10 @@ public class CardPanel extends JPanel{
 			AffineTransform at = new AffineTransform();
 			
 			//at.rotate(Math.PI/2);
-			at.translate(getWidth()-cardHeight-cardBorder, (i*cardWidth)+cardWidth + ((getHeight()/2)-((rightCards.size()+rightDeadCards.size())*cardWidth)/2));
+			at.translate(getWidth()-cardHeight-cardBorder, (i*cardWidth) + ((getHeight()/2)+((rightCards.size()+rightDeadCards.size())*cardWidth)/2));
 			at.rotate(-Math.PI/2);
 				
-			 img = ImageIO.read(new File((rightCards.get(i).getFront())));
+			 img = ImageIO.read(new File((rightDeadCards.get(i).getBack())));
 			 
 			 at.scale((cardWidth*1.0)/img.getWidth(), (cardHeight*1.0)/img.getHeight());
 			 
@@ -298,7 +298,7 @@ public class CardPanel extends JPanel{
 			AffineTransform at = new AffineTransform();
 			
 			//at.rotate(Math.PI/2);
-			at.translate(getWidth()-cardHeight-cardBorder, (i*cardWidth)+cardWidth + ((getHeight()/2)-(rightCards.size()*cardWidth)/2));
+			at.translate(getWidth()-cardHeight-cardBorder, (i*cardWidth)+cardWidth + ((getHeight()/2)-((rightCards.size()+rightDeadCards.size())*cardWidth)/2));
 			at.rotate(-Math.PI/2);
 				
 			 img = ImageIO.read(new File((rightCards.get(i).getFront())));
