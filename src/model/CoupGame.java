@@ -47,6 +47,7 @@ public class CoupGame implements Game {
         System.out.println("Making move " + m);
         this.gameState = gameState.generateSuccessorState(p1, m, target);
         CoupPanel.getInstance().setState(gameState);
+        aiTurnsBeforePlayer();
 
     }
 
@@ -83,15 +84,17 @@ public class CoupGame implements Game {
         GameController control = GameController.getInstance();
 
         int index = gameState.getCurrentPlayerIndex();
+        if (index == 0) index = 4;
         for (int i = 1; i < index; i++) {
             Player cur = players[i];
-            if (cur instanceof CompPlayer) {
+            if (cur.isAlive()) {
                 List<Move> valids = control.getValidMoves(this.gameState, cur);
                 Move move = cur.makeMove(valids);
                 System.out.println(cur + " wants to make move " + move + " out of " + valids);
                 control.pushAction(new Action(cur, move));
             }
         }
+        System.out.println("===============AI TURN OVER==================");
         control.executeActions();
     }
 
@@ -103,13 +106,16 @@ public class CoupGame implements Game {
         Player[] players = this.gameState.getPlayers();
         GameController control = GameController.getInstance();
         for (int i = index; i < players.length; i++) {
+            //System.out.println("computer player should be taking turn before player");
             Player cur = players[i];
-            if (cur instanceof CompPlayer) {
+            System.out.println("Index of player's turn: " + index);
+            if (cur.isAI() && cur.isAlive()) {
                 List<Move> valids = control.getValidMoves(this.gameState, cur);
                 Move move = cur.makeMove(valids);
-                System.out.println(cur + " wants to make move " + move + " out of " + valids);
+                System.out.println(cur + " really wants to make move " + move + " out of " + valids);
                 control.pushAction(new Action(cur, move));
             }
         }
+        System.out.println("------PLAYER SHOULD GO HERE----------");
     }
 }

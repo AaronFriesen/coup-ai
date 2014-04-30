@@ -11,7 +11,7 @@ public class CoupPlayer implements Player {
 	protected List<Card> livingCards;
 	protected List<Card> deadCards;
 	protected boolean isAI;
-	protected boolean isAlive;
+	protected boolean isAlive = true;
 	protected static Random randy = new Random();
 
 
@@ -61,7 +61,7 @@ public class CoupPlayer implements Player {
     }
 
     public boolean isAlive() {
-    	return isAlive;
+    	return livingCards.size() > 0;
     }
 
     public void killCard(Card c) {
@@ -127,7 +127,7 @@ public class CoupPlayer implements Player {
 			System.out.println("DO NOT CALL MAKEMOVE ON THE PLAYER");
 			return null;
 		}
-		System.out.println("length of moves: " + valids.size());
+		//System.out.println("length of moves: " + valids.size());
 		return valids.get(randy.nextInt(valids.size()));
 	}
 

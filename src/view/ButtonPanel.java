@@ -74,14 +74,14 @@ public class ButtonPanel extends JPanel{
 
 	public void populate(final List<Move> moves){
 
-		System.out.println("Button Panel wants to add these: " + moves);
+		//System.out.println("Button Panel wants to add these: " + moves);
 
 		//this.add(Box.createVerticalGlue());
 
 		//remove old buttons;
 		int len = this.getComponents().length;
 		for(int i = 0; i < len; i++){
-			
+
 			this.remove(this.getComponent(0));
 
 		}
@@ -94,21 +94,21 @@ public class ButtonPanel extends JPanel{
 
 		for(int i = 0; i < moves.size(); i++){
 
-			
+
 			Player[] players = control.getPlayers();
 			String[] names = new String[]{"Player 2", "Player 3", "Player 4"};
 			JComboBox<String> playersBox = new JComboBox(names);
-			
+
 			Move m = moves.get(i);
 			JButton a = new JButton(m.toString());
 			this.add(a);
 			a.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
-					System.out.println("player 1 took " + m.toString() + " a derpa derp");
-					
+
+					//System.out.println("player 1 took " + m.toString() + " a derpa derp");
+
 					if(m!= null){
-						
+
 						Player targetPlayer = players[1];
 						String boxSelection = (String)playersBox.getSelectedItem();
 						if(boxSelection.equals("Player 2")){
@@ -118,7 +118,7 @@ public class ButtonPanel extends JPanel{
 						}else if(boxSelection.equals("Player 4")){
 							targetPlayer = players[3];
 						}
-						
+
 
 						if(m == Move.PASS){
 							//System.out.println("TESTING SELECT "+targetPlayer.toString());
@@ -126,37 +126,37 @@ public class ButtonPanel extends JPanel{
 							control.pushAction(new Action(targetPlayer, Move.STEAL));
 						}else if(m == Move.ASSASSINATE){
 							control.pushAction(new Action(targetPlayer, Move.ASSASSINATE));
-							
+
 						}else if(m == Move.COUP){
 							control.pushAction(new Action(targetPlayer, Move.COUP));
 						}else{
 							control.pushAction(new Action(control.getHumanPlayer(), m));
 						}
-				 
+
+						control.aiTurns();
 					}
-					control.aiTurns();
 				}
 			});
-			
-			
-			
-			if(m == Move.PASS || m == Move.STEAL || m== Move.ASSASSINATE || m == Move.COUP){
-				
 
-				
+
+
+			if(m == Move.PASS || m == Move.STEAL || m== Move.ASSASSINATE || m == Move.COUP){
+
+
+
 				playersBox.setMaximumSize(new Dimension(100,20));
-				
-				
+
+
 				//playersBox.setSelectedIndex(4);
 				playersBox.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						JComboBox cb = (JComboBox)e.getSource();
 						String out = (String)cb.getSelectedItem();
-						
+
 						if(out.equals("Player 2")){
 							//curTarget = players[1];
 						}
-						
+
 						//System.out.println(curTarget);
 					}
 				});

@@ -7,6 +7,7 @@ import model.Player;
 import model.Action;
 import model.Move;
 import model.CoupGame;
+import view.CoupPanel;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -27,6 +28,7 @@ public class GameController {
     private LinkedList<Action> stack;
 
     private static GameController instance;
+    private int numPasses;
 
     private GameController() {
         this.game = new CoupGame(); // This is where we put concrete game.
@@ -48,7 +50,18 @@ public class GameController {
 
     public void pushAction(Action m) {
         if (m.move == null) throw new RuntimeException();
-        stack.push(m);
+        if (m.move == Move.PASS) {
+            numPasses++;
+        } else {
+            numPasses = 0;
+        }
+        if (numPasses < 4) {
+            stack.push(m);
+            CoupPanel.getInstance().setState(game.getState());
+        } else {
+            System.out.println("EXECUTING DUE TO 3 PASSES");
+            //executeActions();
+        }
     }
 
     public void executeActions() {
@@ -99,12 +112,13 @@ public class GameController {
                 } else if (m == Move.CALL_BLUFF_ASSASSIN || m == Move.CALL_BLUFF_AMBASSADOR
                         || m == Move.CALL_BLUFF_CAPTAIN || m == Move.CALL_BLUFF_CONTESSA
                         || m == Move.CALL_BLUFF_DUKE) {
-                    while (temp == Move.PASS) {
+                    while (temp == Move.PASS && !stack.isEmpty()) {
                         temp = stack.pop().move;
                     }
                     game.resolveSuccessfulCall(m);
                 } else {
                     game.makeMove(m, a.player);
+                    System.out.println("Just made move" + m);
                 }
             }
         }
@@ -132,15 +146,18 @@ public class GameController {
      */
     public List<Move> getValidMoves(GameState gS, Player p) {
         //probably for use by bots
+        //System.out.println("finding valid moves for " + p);
         List<Move> legals = new LinkedList<Move>();
         if (p.equals(gS.getCurrentPlayer())) { //if it's player 1's turn
+
+
             if (stack.isEmpty()) {
                 if (p.getIsk() < 10) { //if you have less than 10, you can do standard moves
                     legals.add(Move.INCOME);
                     legals.add(Move.FOREIGN_AID);
                     if (p.getIsk() >= 7) legals.add(Move.COUP); //if you have 7 or more you can even coup!
                     legals.add(Move.TAX);
-                    legals.add(Move.ASSASSINATE);
+                    if (p.getIsk() >= 3) legals.add(Move.ASSASSINATE);
                     legals.add(Move.EXCHANGE);
                     legals.add(Move.STEAL);
                 } else { //otherwise, you gotta coup
@@ -183,6 +200,8 @@ public class GameController {
             } else if (stackContainsMove(Move.BLOCK_STEAL_CAPTAIN)) { //same with captain
                 legals.add(Move.PASS);
                 legals.add(Move.CALL_BLUFF_CAPTAIN);
+            } else {
+                legals.add(Move.PASS);
             }
         } else { //otherwise, it's ANOTHER PLAYER!
             legals.add(Move.PASS); //can always pass. Will /usually/ pass.

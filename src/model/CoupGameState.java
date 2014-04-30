@@ -2,6 +2,7 @@ package model;
 
 import java.util.List;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import controller.*;
 
 public class CoupGameState implements GameState {
@@ -64,6 +65,7 @@ public class CoupGameState implements GameState {
     public GameState generateSuccessorState(Player source, Move m,
                                                 Player target) {
         CoupGameState newState = new CoupGameState(this);
+        GameController control = GameController.getInstance();
         int newSource = 0;
         int newTarget = 0;
 
@@ -87,17 +89,23 @@ public class CoupGameState implements GameState {
                 newState.players[activePlayer].addIsk(2); break;
             case COUP:
                 newState.players[activePlayer].removeIsk(7);
-                newState.players[newTarget].killCard(Card.DUKE); break;
+                Card dead = control.playerChooseDeadCard(newState.players[newTarget]);
+                deck.discardAndShuffle(dead); break;
             case TAX:
                 newState.players[activePlayer].addIsk(3); break;
             case ASSASSINATE:
                 newState.players[activePlayer].removeIsk(3);
-                newState.players[newTarget].killCard(Card.DUKE); break;
+                Card dead2 = control.playerChooseDeadCard(newState.players[newTarget]);
+                deck.discardAndShuffle(dead2); break;
             case EXCHANGE:
                 List<Card> newCards = new ArrayList<Card>();
                 newCards.add(newState.deck.draw());
                 newCards.add(newState.deck.draw());
-                newState.players[activePlayer].setLivingCards(newCards); break;
+                List<Card> oldCards = newState.players[activePlayer].setLivingCards(newCards);
+                for (Card c : oldCards) {
+                    deck.discardAndShuffle(c);
+                }
+                break;
             case STEAL:
                 newState.players[activePlayer].addIsk(newState.players[newTarget].stealFrom()); break;
             default: break;
@@ -105,6 +113,9 @@ public class CoupGameState implements GameState {
 
         newState.activePlayer++;
         newState.activePlayer %= NUM_PLAYERS;
+        if (!newState.players[0].isAlive()) {
+            JOptionPane.showMessageDialog(null, "You lose!");
+        }
         return newState;
 
     }
