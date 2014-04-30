@@ -42,8 +42,8 @@ public class CoupPanel extends JPanel{
 	public void setState(GameState gs){
 		this.gs = gs;
 		cp.setState(gs);
-		bp = new ButtonPanel();
-		add(bp, BorderLayout.WEST);
+		//bp = new ButtonPanel();
+		//add(bp, BorderLayout.WEST);
 		GameController instance = GameController.getInstance();
 		bp.populate(instance.getValidMoves(gs));
 		repaint();

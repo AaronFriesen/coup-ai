@@ -47,6 +47,7 @@ public class CoupGame implements Game {
         System.out.println("Making move " + m);
         this.gameState = gameState.generateSuccessorState(p1, m, target);
         CoupPanel.getInstance().setState(gameState);
+
     }
 
     public void setPlayers(Player[] l) {
@@ -76,7 +77,9 @@ public class CoupGame implements Game {
     public void aiTurns() {
         Player[] players = this.gameState.getPlayers();
         GameController control = GameController.getInstance();
-        for (int i = 0; i < players.length; i++) {
+
+        int index = gameState.getCurrentPlayerIndex();
+        for (int i = 1; i < index; i++) {
             Player cur = players[i];
             if (cur instanceof CompPlayer) {
                 List<Move> valids = control.getValidMoves(this.gameState, cur);
@@ -86,5 +89,23 @@ public class CoupGame implements Game {
             }
         }
         control.executeActions();
+    }
+
+    public void aiTurnsBeforePlayer() {
+        int index = gameState.getCurrentPlayerIndex();
+        if (index == 0) {
+            return;
+        }
+        Player[] players = this.gameState.getPlayers();
+        GameController control = GameController.getInstance();
+        for (int i = index; i < players.length; i++) {
+            Player cur = players[i];
+            if (cur instanceof CompPlayer) {
+                List<Move> valids = control.getValidMoves(this.gameState, cur);
+                Move move = cur.makeMove(valids);
+                System.out.println(cur + " wants to make move " + move + " out of " + valids);
+                control.pushAction(new Action(cur, move));
+            }
+        }
     }
 }

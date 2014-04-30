@@ -74,19 +74,23 @@ public class ButtonPanel extends JPanel{
 
 	public void populate(final List<Move> moves){
 
+		System.out.println("Button Panel wants to add these: " + moves);
 
-		this.add(Box.createVerticalGlue());
-		
+		//this.add(Box.createVerticalGlue());
+
 		//remove old buttons;
-		for(int i = 0; i < this.getComponents().length; i++){
+		int len = this.getComponents().length;
+		for(int i = 0; i < len; i++){
 			
-			//this.remove(this.getComponent(i));
-			
+			this.remove(this.getComponent(0));
+
 		}
-		
+
+		this.revalidate();
+
 		//
-		
-		
+
+
 		for(int i = 0; i < moves.size(); i++){
 
 
@@ -104,8 +108,9 @@ public class ButtonPanel extends JPanel{
 
 		}
 
-		this.add(Box.createVerticalGlue());
+		//this.add(Box.createVerticalGlue());
 		//repaint();
+		revalidate();
 	}
 
 

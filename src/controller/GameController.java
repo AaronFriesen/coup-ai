@@ -230,6 +230,10 @@ public class GameController {
         this.game.aiTurns();
     }
 
+    public void aiTurnsBeforePlayer() {
+        this.game.aiTurnsBeforePlayer();
+    }
+
     public Player getHumanPlayer() {
         return this.game.getHumanPlayer();
     }

@@ -171,4 +171,7 @@ public class CoupGameState implements GameState {
         return ret;
     }
 
+    public int getCurrentPlayerIndex() {
+        return this.activePlayer;
+    }
 }

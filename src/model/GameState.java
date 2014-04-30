@@ -8,6 +8,7 @@ public interface GameState {
 
     Player[] getPlayers();
     Player getCurrentPlayer();
+    int getCurrentPlayerIndex();
     void setPlayers(Player[] l);
     Player getHumanPlayer();
     GameState generateSuccessorState(Player source, Move m, Player target);

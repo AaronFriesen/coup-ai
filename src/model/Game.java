@@ -15,5 +15,6 @@ public interface Game {
     Player getCurrentPlayer();
 
     void aiTurns();
+    void aiTurnsBeforePlayer();
     Player getHumanPlayer();
 }
