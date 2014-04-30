@@ -238,4 +238,8 @@ public class GameController {
         return this.game.getHumanPlayer();
     }
 
+    public Player[] getPlayers() {
+        return this.game.getState().getPlayers();
+    }
+
 }

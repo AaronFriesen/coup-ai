@@ -12,6 +12,8 @@ public interface Game {
     void resolveFailedCall(Player caller, Move bluffType);
     void resolveSuccessfulCall(Move bluffType);
     GameState getState();
+
+    Player[] getPlayers();
     Player getCurrentPlayer();
 
     void aiTurns();
